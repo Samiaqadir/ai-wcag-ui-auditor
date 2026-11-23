@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Accessibility (WCAG) & UI Regression Auditor - Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --critical: #ef4444;
+      --serious: #f59e0b;
+      --moderate: #06b6d4;
+      --success: #10b981;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .brand-icon {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #fff;
+    }
+    .brand h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .brand p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.15s ease;
+    }
+    .btn:hover {
+      background: var(--primary-hover);
+    }
+    .btn-secondary {
+      background: #334155;
+      color: #f8fafc;
+    }
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    /* Stats bar */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      padding: 1.5rem 2rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+    .stat-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+    .stat-value.critical { color: var(--critical); }
+    .stat-value.serious { color: var(--serious); }
+    .stat-value.moderate { color: var(--moderate); }
+    .stat-value.success { color: var(--success); }
+
+    /* Main layout */
+    .container {
+      display: flex;
+      flex: 1;
+      padding: 0 2rem 2rem 2rem;
+      gap: 1.5rem;
+      height: calc(100vh - 170px);
+    }
+    .sidebar {
+      width: 320px;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--surface-border);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .page-list {
+      list-style: none;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .page-item {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid var(--surface-border);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.15s ease;
+    }
+    .page-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .page-item.active {
+      background: rgba(59, 130, 246, 0.15);
+      border-left: 3px solid var(--primary);
+    }
+    .page-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      word-break: break-all;
+    }
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+    .badge-error { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+    /* Center workspace */
+    .workspace {
+      flex: 1;
+      display: flex;
+      gap: 1.5rem;
+      overflow: hidden;
+    }
+    .preview-pane {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .pane-header {
+      padding: 0.75rem 1rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .preview-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    /* Violations list pane */
+    .violations-pane {
+      width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .violations-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .violation-card {
+      background: #0f172a;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 1rem;
+      border-left: 4px solid var(--critical);
+    }
+    .violation-card.serious { border-left-color: var(--serious); }
+    .violation-card.moderate { border-left-color: var(--moderate); }
+    .v-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+    .v-rule {
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #60a5fa;
+      font-weight: 600;
+    }
+    .v-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .v-selector {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      background: #1e293b;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+      word-break: break-all;
+    }
+    .v-desc {
+      font-size: 0.825rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+    }
+    .v-fix {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 6px;
+      padding: 0.6rem;
+      font-size: 0.775rem;
+      color: #6ee7b7;
+      font-family: 'JetBrains Mono', monospace;
+      word-break: break-all;
+    }
+    .compliant-banner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      padding: 2rem;
+    }
+    .compliant-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-icon">&lt;/&gt;</div>
+      <div>
+        <h1>AI Accessibility & UI Regression Auditor</h1>
+        <p>WCAG 2.1 AA Compliance & Regression Platform</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="run-audit-btn" onclick="fetchAudit(true)">
+        <span id="btn-icon">⚡</span> Run Live Audit
+      </button>
+    </div>
+  </header>
+
+  <!-- Top Level Metrics -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-title">Pages Audited</div>
+      <div class="stat-value" id="stat-scanned">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Compliant Pages</div>
+      <div class="stat-value success" id="stat-passed">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Failing Pages</div>
+      <div class="stat-value critical" id="stat-failed">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Total Violations</div>
+      <div class="stat-value" id="stat-violations">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Critical Defects</div>
+      <div class="stat-value critical" id="stat-critical">-</div>
+    </div>
+  </section>
+
+  <!-- Workspace -->
+  <div class="container">
+    <!-- Sidebar / File List -->
+    <aside class="sidebar">
+      <div class="sidebar-header">Test Pages Suite</div>
+      <ul class="page-list" id="page-list">
+        <!-- Rendered dynamically -->
+      </ul>
+    </aside>
+
+    <!-- Center Workspace -->
+    <main class="workspace">
+      <!-- Live Preview -->
+      <section class="preview-pane">
+        <div class="pane-header">
+          <span id="preview-title">Interactive Page Preview</span>
+          <span id="preview-url" style="color: var(--text-muted); font-size: 0.75rem;"></span>
+        </div>
+        <iframe id="preview-frame" class="preview-iframe" src="about:blank"></iframe>
+      </section>
+
+      <!-- Violations List -->
+      <section class="violations-pane">
+        <div class="pane-header">
+          <span>Detected WCAG Barriers (<span id="violations-count">0</span>)</span>
+        </div>
+        <div class="violations-content" id="violations-content">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    let auditData = null;
+    let selectedPageIndex = 0;
+
+    async function fetchAudit(forceRun = false) {
+      const btn = document.getElementById('run-audit-btn');
+      const icon = document.getElementById('btn-icon');
+      btn.disabled = true;
+      icon.textContent = '⏳';
+
+      try {
+        const url = forceRun ? '/api/audit?run=1' : '/output/initial_audit_report.json';
+        const res = await fetch(url);
+        auditData = await res.json();
+        renderDashboard();
+      } catch (err) {
+        console.error("Failed to load audit data", err);
+      } finally {
+        btn.disabled = false;
+        icon.textContent = '⚡';
+      }
+    }
+
+    function renderDashboard() {
+      if (!auditData) return;
+
+      // Stats
+      document.getElementById('stat-scanned').textContent = auditData.total_pages_scanned;
+      document.getElementById('stat-passed').textContent = auditData.passed_pages;
+      document.getElementById('stat-failed').textContent = auditData.failed_pages;
+      document.getElementById('stat-violations').textContent = auditData.total_violations;
+      document.getElementById('stat-critical').textContent = auditData.violations_by_severity.Critical || 0;
+
+      // Page list
+      const listEl = document.getElementById('page-list');
+      listEl.innerHTML = '';
+      auditData.results.forEach((page, idx) => {
+        const li = document.createElement('li');
+        li.className = `page-item ${idx === selectedPageIndex ? 'active' : ''}`;
+        li.onclick = () => selectPage(idx);
+
+        const isPass = page.status === 'PASSED';
+        li.innerHTML = `
+          <span class="page-name">${page.page_name}</span>
+          <span class="badge ${isPass ? 'badge-pass' : 'badge-error'}">
+            ${isPass ? '0 Violations' : page.total_violations + ' Issues'}
+          </span>
+        `;
+        listEl.appendChild(li);
+      });
+
+      renderSelectedPage();
+    }
+
+    function selectPage(idx) {
+      selectedPageIndex = idx;
+      document.querySelectorAll('.page-item').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+      renderSelectedPage();
+    }
+
+    function renderSelectedPage() {
+      const page = auditData.results[selectedPageIndex];
+      if (!page) return;
+
+      // Update Preview Frame
+      const frame = document.getElementById('preview-frame');
+      const previewUrl = `/test_pages/${page.page_name}`;
+      frame.src = previewUrl;
+      document.getElementById('preview-title').textContent = page.page_name;
+      document.getElementById('preview-url').textContent = previewUrl;
+
+      // Update Violations List
+      const vContent = document.getElementById('violations-content');
+      document.getElementById('violations-count').textContent = page.total_violations;
+      vContent.innerHTML = '';
+
+      if (page.total_violations === 0) {
+        vContent.innerHTML = `
+          <div class="compliant-banner">
+            <div class="compliant-icon">🎉</div>
+            <h3 style="color: #10b981; margin-bottom: 0.5rem;">100% WCAG 2.1 AA Compliant!</h3>
+            <p style="color: #94a3b8; font-size: 0.85rem;">Zero accessibility barriers detected. Fully compatible with assistive screen readers and keyboard navigation.</p>
+          </div>
+        `;
+        return;
+      }
+
+      page.violations.forEach(v => {
+        const card = document.createElement('div');
+        const sevClass = v.severity.toLowerCase();
+        card.className = `violation-card ${sevClass}`;
+        card.innerHTML = `
+          <div class="v-header">
+            <span class="v-rule">${v.rule_id}</span>
+            <span class="badge badge-error" style="text-transform: capitalize;">${v.severity}</span>
+          </div>
+          <div class="v-title">${v.rule_name}</div>
+          <div class="v-selector">${v.dom_selector}</div>
+          <div class="v-desc">${v.issue_explanation}</div>
+          <div class="v-fix"><strong>Remediation:</strong> ${v.suggested_fix}</div>
+        `;
+        vContent.appendChild(card);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => fetchAudit(false));
+  </script>
+</body>
+</html>
