@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- SEEDED VIOLATION 1 (WCAG 3.1.1): Missing lang attribute on <html> element -->
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Designing for Everyone - Web Accessibility Insights</title>
+  <style>
+    body {
+      font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      line-height: 1.7;
+      color: #1e293b;
+      max-width: 740px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+    h1 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 2.2rem;
+      line-height: 1.25;
+      color: #0f172a;
+    }
+    p {
+      font-size: 1.125rem;
+      margin-bottom: 1.5rem;
+    }
+    a {
+      color: #2563eb;
+    }
+    /* SEEDED VIOLATION 2 (WCAG 2.4.7): Removing focus outlines across the page without replacement */
+    a:focus, button:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    .author-bio {
+      background: #f8fafc;
+      padding: 1.5rem;
+      border-left: 4px solid #3b82f6;
+      margin-top: 2.5rem;
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <header>
+      <h1>Designing for Everyone: Practical Strategies for Inclusive UX</h1>
+      <p style="color: #64748b; font-size: 0.95rem;">Published on November 20, 2026 by Elena Rostova</p>
+    </header>
+
+    <p>
+      Digital accessibility is not a feature or a post-launch compliance checklist; it is an intrinsic quality of robust software engineering. When we design products that can be navigated by assistive technology, we naturally craft experiences that are more resilient, maintainable, and user-friendly for all people.
+    </p>
+
+    <p>
+      To learn more about the complete WCAG 2.1 technical guidelines and how to automate regression testing,
+      <!-- SEEDED VIOLATION 3 (WCAG 2.4.4): Ambiguous / generic link text "Click here" without contextual information -->
+      <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" id="ambiguous-link-1">Click here</a>.
+    </p>
+
+    <p>
+      We recently surveyed over 400 product teams to identify the most common blockers to continuous accessibility auditing. The full statistical breakdown and survey methodologies are available.
+      <!-- SEEDED VIOLATION 3b (WCAG 2.4.4): Another non-descriptive link "Read more" -->
+      <a href="/research/survey-2026" id="ambiguous-link-2">Read more</a>.
+    </p>
+
+    <div class="author-bio">
+      <h3>About the Author</h3>
+      <p>Elena is a Principal Accessibility Architect specializing in design systems and automated regression tooling.</p>
+    </div>
+  </article>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudMetrics SaaS Dashboard</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .icon-btn {
+      background: transparent;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 0.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+    }
+    .dashboard-content {
+      padding: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .card {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    /* SEEDED VIOLATION: Low Contrast Status Badge */
+    /* Light gray text #94a3b8 on soft gray background #f8fafc: contrast ratio ~ 2.4:1 */
+    .status-badge-inactive {
+      background-color: #f8fafc;
+      color: #94a3b8;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <strong>CloudMetrics Pro</strong>
+    </div>
+    <div class="nav-actions">
+      <!-- SEEDED VIOLATION 1a (WCAG 4.1.2): Empty icon-only button without accessible text or aria-label -->
+      <button class="icon-btn" id="notifications-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+      </button>
+
+      <!-- SEEDED VIOLATION 1b (WCAG 4.1.2): Empty icon-only button without accessible text or aria-label -->
+      <button class="icon-btn" id="settings-btn" style="margin-left: 0.5rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="dashboard-content">
+    <h1>Operations & Revenue Dashboard</h1>
+
+    <!-- SEEDED VIOLATION 2 (WCAG 1.3.1): Heading hierarchy skips directly from <h1> to <h4> -->
+    <h4>Real-time Infrastructure Status</h4>
+    <div class="card-grid">
+      <div class="card">
+        <h3>API Gateway Latency</h3>
+        <p style="font-size: 1.8rem; font-weight: bold; margin: 0.5rem 0;">42 ms</p>
+        <span style="color: #16a34a;">&uarr; Optimal performance</span>
+      </div>
+
+      <div class="card">
+        <h3>Database Cluster Replica</h3>
+        <p style="font-size: 1.8rem; font-weight: bold; margin: 0.5rem 0;">Synced</p>
+        <!-- SEEDED VIOLATION 3 (WCAG 1.4.3): Low-contrast text on badge -->
+        <span class="status-badge-inactive" id="cluster-status-badge">Standby Mode</span>
+      </div>
+
+      <div class="card">
+        <h3>Monthly Active Users</h3>
+        <p style="font-size: 1.8rem; font-weight: bold; margin: 0.5rem 0;">128,400</p>
+        <span style="color: #2563eb;">+14.2% vs last month</span>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
