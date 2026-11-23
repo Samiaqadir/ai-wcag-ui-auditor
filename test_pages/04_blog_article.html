@@ -54,13 +54,13 @@
     <p>
       To learn more about the complete WCAG 2.1 technical guidelines and how to automate regression testing,
       <!-- SEEDED VIOLATION 3 (WCAG 2.4.4): Ambiguous / generic link text "Click here" without contextual information -->
-      <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" id="ambiguous-link-1">Click here</a>.
+      <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" id="ambiguous-link-1" target="_blank">Click here</a>.
     </p>
 
     <p>
       We recently surveyed over 400 product teams to identify the most common blockers to continuous accessibility auditing. The full statistical breakdown and survey methodologies are available.
       <!-- SEEDED VIOLATION 3b (WCAG 2.4.4): Another non-descriptive link "Read more" -->
-      <a href="/research/survey-2026" id="ambiguous-link-2">Read more</a>.
+      <a href="#survey-2026" id="ambiguous-link-2" onclick="event.preventDefault(); alert('Demo Navigation: This is a placeholder test link.');">Read more</a>.
     </p>
 
     <div class="author-bio">

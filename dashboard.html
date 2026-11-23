@@ -3,152 +3,242 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Accessibility (WCAG) & UI Regression Auditor - Dashboard</title>
+  <title>AI Accessibility (WCAG 2.1 AA) & UI Regression Auditor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    /* =====================================================================
+       CSS VARIABLES: MODERN LIGHT THEME (DEFAULT) & DARK THEME
+       ===================================================================== */
     :root {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --surface-border: #334155;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --primary: #3b82f6;
-      --primary-hover: #2563eb;
-      --critical: #ef4444;
-      --serious: #f59e0b;
-      --moderate: #06b6d4;
-      --success: #10b981;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --surface-border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-subtle: #94a3b8;
+      
+      --brand: #4f46e5;
+      --brand-hover: #4338ca;
+      --brand-light: #eef2ff;
+      --brand-border: #c7d2fe;
+
+      --critical: #dc2626;
+      --critical-bg: #fef2f2;
+      --critical-border: #fecaca;
+
+      --serious: #d97706;
+      --serious-bg: #fffbeb;
+      --serious-border: #fde68a;
+
+      --moderate: #0284c7;
+      --moderate-bg: #f0f9ff;
+      --moderate-border: #bae6fd;
+
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --success-border: #bbf7d0;
+
+      --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+      --header-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
     }
+
+    [data-theme="dark"] {
+      --bg: #090d16;
+      --surface: #111827;
+      --surface-subtle: #1f2937;
+      --surface-border: #283548;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --text-subtle: #6b7280;
+
+      --brand: #6366f1;
+      --brand-hover: #4f46e5;
+      --brand-light: rgba(99, 102, 241, 0.15);
+      --brand-border: rgba(99, 102, 241, 0.3);
+
+      --critical: #f87171;
+      --critical-bg: rgba(239, 68, 68, 0.12);
+      --critical-border: rgba(239, 68, 68, 0.3);
+
+      --serious: #fbbf24;
+      --serious-bg: rgba(245, 158, 11, 0.12);
+      --serious-border: rgba(245, 158, 11, 0.3);
+
+      --moderate: #38bdf8;
+      --moderate-bg: rgba(6, 182, 212, 0.12);
+      --moderate-border: rgba(6, 182, 212, 0.3);
+
+      --success: #34d399;
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --success-border: rgba(16, 185, 129, 0.3);
+
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+      --header-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
+
+    /* Top Navigation Bar */
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--surface-border);
-      padding: 1rem 2rem;
+      padding: 0.85rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: var(--header-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.85rem;
     }
     .brand-icon {
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #ffffff;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
-      color: #fff;
+      font-weight: 800;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
     }
-    .brand h1 {
+    .brand-text h1 {
       font-size: 1.15rem;
       font-weight: 700;
       letter-spacing: -0.02em;
+      line-height: 1.2;
     }
-    .brand p {
-      font-size: 0.75rem;
+    .brand-text p {
+      font-size: 0.775rem;
       color: var(--text-muted);
+      font-weight: 500;
     }
-    .actions {
+    .nav-actions {
       display: flex;
       gap: 0.75rem;
       align-items: center;
     }
     .btn {
-      background: var(--primary);
-      color: #fff;
+      background: var(--brand);
+      color: #ffffff;
       border: none;
-      padding: 0.6rem 1.25rem;
-      border-radius: 6px;
+      padding: 0.6rem 1.15rem;
+      border-radius: 8px;
       font-weight: 600;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      transition: background 0.15s ease;
+      box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
     }
     .btn:hover {
-      background: var(--primary-hover);
+      background: var(--brand-hover);
     }
-    .btn-secondary {
-      background: #334155;
-      color: #f8fafc;
+    .btn-outline {
+      background: var(--surface);
+      color: var(--text-main);
+      border: 1px solid var(--surface-border);
+      box-shadow: none;
     }
-    .btn-secondary:hover {
-      background: #475569;
+    .btn-outline:hover {
+      background: var(--surface-subtle);
+      border-color: var(--text-subtle);
     }
 
-    /* Stats bar */
+    /* Stats Grid */
+    .stats-container {
+      padding: 1.25rem 2rem 0.5rem 2rem;
+    }
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 1rem;
-      padding: 1.5rem 2rem;
     }
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--surface-border);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 1rem 1.25rem;
+      box-shadow: var(--card-shadow);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand);
     }
     .stat-title {
       font-size: 0.75rem;
       text-transform: uppercase;
+      font-weight: 700;
       letter-spacing: 0.05em;
       color: var(--text-muted);
       margin-bottom: 0.35rem;
     }
     .stat-value {
-      font-size: 1.75rem;
-      font-weight: 700;
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
     }
-    .stat-value.critical { color: var(--critical); }
-    .stat-value.serious { color: var(--serious); }
-    .stat-value.moderate { color: var(--moderate); }
-    .stat-value.success { color: var(--success); }
+    .stat-card.critical .stat-value { color: var(--critical); }
+    .stat-card.success .stat-value { color: var(--success); }
+    .stat-card.serious .stat-value { color: var(--serious); }
 
-    /* Main layout */
+    /* Main Container */
     .container {
       display: flex;
       flex: 1;
-      padding: 0 2rem 2rem 2rem;
-      gap: 1.5rem;
-      height: calc(100vh - 170px);
+      padding: 1rem 2rem 2rem 2rem;
+      gap: 1.25rem;
+      height: calc(100vh - 190px);
+      min-height: 520px;
     }
+
+    /* Sidebar: Test Pack */
     .sidebar {
-      width: 320px;
+      width: 310px;
       background: var(--surface);
       border: 1px solid var(--surface-border);
-      border-radius: 8px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--card-shadow);
       overflow: hidden;
     }
     .sidebar-header {
-      padding: 1rem;
+      padding: 0.9rem 1.2rem;
+      background: var(--surface-subtle);
       border-bottom: 1px solid var(--surface-border);
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.775rem;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--text-muted);
     }
     .page-list {
@@ -157,138 +247,244 @@
       flex: 1;
     }
     .page-item {
-      padding: 0.9rem 1rem;
+      padding: 0.85rem 1.15rem;
       border-bottom: 1px solid var(--surface-border);
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background 0.15s ease;
+      gap: 0.5rem;
     }
     .page-item:hover {
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--surface-subtle);
     }
     .page-item.active {
-      background: rgba(59, 130, 246, 0.15);
-      border-left: 3px solid var(--primary);
+      background: var(--brand-light);
+      border-left: 4px solid var(--brand);
     }
     .page-name {
-      font-size: 0.875rem;
-      font-weight: 500;
+      font-size: 0.85rem;
+      font-weight: 600;
       word-break: break-all;
     }
     .badge {
-      font-size: 0.75rem;
-      padding: 0.2rem 0.5rem;
+      font-size: 0.725rem;
+      padding: 0.25rem 0.55rem;
       border-radius: 9999px;
-      font-weight: 600;
+      font-weight: 700;
+      white-space: nowrap;
     }
-    .badge-error { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-critical { background: var(--critical-bg); color: var(--critical); border: 1px solid var(--critical-border); }
+    .badge-serious { background: var(--serious-bg); color: var(--serious); border: 1px solid var(--serious-border); }
+    .badge-moderate { background: var(--moderate-bg); color: var(--moderate); border: 1px solid var(--moderate-border); }
+    .badge-success { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
 
-    /* Center workspace */
+    /* Center Split Workspace */
     .workspace {
       flex: 1;
       display: flex;
-      gap: 1.5rem;
+      gap: 1.25rem;
       overflow: hidden;
     }
+
+    /* Live Preview Pane */
     .preview-pane {
       flex: 1;
       background: var(--surface);
       border: 1px solid var(--surface-border);
-      border-radius: 8px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--card-shadow);
       overflow: hidden;
     }
     .pane-header {
-      padding: 0.75rem 1rem;
-      background: rgba(0, 0, 0, 0.2);
+      padding: 0.75rem 1.2rem;
+      background: var(--surface-subtle);
       border-bottom: 1px solid var(--surface-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.85rem;
+      gap: 1rem;
+    }
+    .pane-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-width: 0;
+    }
+    .pane-header-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .pane-header-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .btn-icon {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.775rem;
       font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .btn-icon:hover {
+      background: var(--surface-subtle);
     }
     .preview-iframe {
       width: 100%;
       height: 100%;
       border: none;
-      background: #fff;
+      background: #ffffff;
     }
 
-    /* Violations list pane */
+    /* Violations Findings Pane */
     .violations-pane {
-      width: 480px;
+      width: 500px;
       background: var(--surface);
       border: 1px solid var(--surface-border);
-      border-radius: 8px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--card-shadow);
       overflow: hidden;
     }
+    .filter-bar {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      background: var(--surface);
+    }
+    .search-input {
+      width: 100%;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--surface-border);
+      border-radius: 6px;
+      font-size: 0.825rem;
+      background: var(--surface-subtle);
+      color: var(--text-main);
+    }
+    .search-input:focus {
+      outline: 2px solid var(--brand);
+      background: var(--surface);
+    }
+    .filter-chips {
+      display: flex;
+      gap: 0.35rem;
+    }
+    .chip {
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.725rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--surface-subtle);
+      color: var(--text-muted);
+      border: 1px solid var(--surface-border);
+    }
+    .chip.active {
+      background: var(--brand);
+      color: #ffffff;
+      border-color: var(--brand);
+    }
+
     .violations-content {
       flex: 1;
       overflow-y: auto;
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.85rem;
     }
     .violation-card {
-      background: #0f172a;
+      background: var(--surface);
       border: 1px solid var(--surface-border);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 1rem;
-      border-left: 4px solid var(--critical);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      border-left: 5px solid var(--critical);
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
     }
     .violation-card.serious { border-left-color: var(--serious); }
     .violation-card.moderate { border-left-color: var(--moderate); }
-    .v-header {
+    .violation-top {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.5rem;
+      align-items: center;
     }
-    .v-rule {
+    .violation-rule-id {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
-      font-family: 'JetBrains Mono', monospace;
-      color: #60a5fa;
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--brand);
     }
-    .v-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
+    .violation-title {
+      font-size: 0.925rem;
+      font-weight: 700;
+      color: var(--text-main);
     }
-    .v-selector {
+    .violation-selector {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      background: #1e293b;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      color: #94a3b8;
-      margin-bottom: 0.5rem;
+      font-size: 0.725rem;
+      background: var(--surface-subtle);
+      padding: 0.35rem 0.5rem;
+      border-radius: 6px;
+      color: var(--text-muted);
       word-break: break-all;
+      border: 1px solid var(--surface-border);
     }
-    .v-desc {
+    .violation-desc {
       font-size: 0.825rem;
-      color: #cbd5e1;
-      line-height: 1.4;
-      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.45;
     }
-    .v-fix {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.2);
+    .violation-fix-box {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
       border-radius: 6px;
       padding: 0.6rem;
       font-size: 0.775rem;
-      color: #6ee7b7;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .fix-code {
       font-family: 'JetBrains Mono', monospace;
       word-break: break-all;
+      flex: 1;
     }
+    .btn-copy {
+      background: var(--surface);
+      border: 1px solid var(--success-border);
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--success);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-copy:hover {
+      background: var(--success);
+      color: #ffffff;
+    }
+
     .compliant-banner {
       display: flex;
       flex-direction: column;
@@ -296,80 +492,182 @@
       justify-content: center;
       height: 100%;
       text-align: center;
+      padding: 2.5rem 1.5rem;
+    }
+    .compliant-badge-big {
+      background: var(--success-bg);
+      border: 2px solid var(--success-border);
+      color: var(--success);
+      font-size: 2.5rem;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    /* Modal / How to Use */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
       padding: 2rem;
     }
-    .compliant-icon {
-      font-size: 3rem;
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--surface-border);
+      padding-bottom: 1rem;
+    }
+    .modal-body {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+    .modal-body h3 {
+      color: var(--text-main);
+      margin: 1.25rem 0 0.5rem 0;
+      font-size: 1rem;
+    }
+    .modal-body code {
+      background: var(--surface-subtle);
+      color: var(--brand);
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .modal-body ol, .modal-body ul {
+      margin-left: 1.25rem;
       margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="brand">
-      <div class="brand-icon">&lt;/&gt;</div>
-      <div>
+      <div class="brand-icon">WCAG</div>
+      <div class="brand-text">
         <h1>AI Accessibility & UI Regression Auditor</h1>
-        <p>WCAG 2.1 AA Compliance & Regression Platform</p>
+        <p>Deterministic Engine + LLM Remediation Suite</p>
       </div>
     </div>
-    <div class="actions">
+    <div class="nav-actions">
+      <!-- How to use button -->
+      <button class="btn btn-outline" onclick="toggleModal(true)">
+        📖 How to Use / Guide
+      </button>
+
+      <!-- Theme Switcher -->
+      <button class="btn btn-outline" id="theme-toggle-btn" onclick="toggleTheme()">
+        🌙 Dark Mode
+      </button>
+
+      <!-- Run Live Audit Button -->
       <button class="btn" id="run-audit-btn" onclick="fetchAudit(true)">
         <span id="btn-icon">⚡</span> Run Live Audit
       </button>
     </div>
   </header>
 
-  <!-- Top Level Metrics -->
-  <section class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-title">Pages Audited</div>
-      <div class="stat-value" id="stat-scanned">-</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Compliant Pages</div>
-      <div class="stat-value success" id="stat-passed">-</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Failing Pages</div>
-      <div class="stat-value critical" id="stat-failed">-</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Total Violations</div>
-      <div class="stat-value" id="stat-violations">-</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Critical Defects</div>
-      <div class="stat-value critical" id="stat-critical">-</div>
+  <!-- Key Metrics Row -->
+  <section class="stats-container">
+    <div class="stats-grid">
+      <div class="stat-card" onclick="filterByChip('all')">
+        <div class="stat-title">Pages Audited</div>
+        <div class="stat-value" id="stat-scanned">-</div>
+      </div>
+      <div class="stat-card success" onclick="selectPage(4)">
+        <div class="stat-title">Compliant Pages</div>
+        <div class="stat-value" id="stat-passed">-</div>
+      </div>
+      <div class="stat-card critical" onclick="filterByChip('all')">
+        <div class="stat-title">Failing Pages</div>
+        <div class="stat-value" id="stat-failed">-</div>
+      </div>
+      <div class="stat-card" onclick="filterByChip('all')">
+        <div class="stat-title">Total Violations</div>
+        <div class="stat-value" id="stat-violations">-</div>
+      </div>
+      <div class="stat-card critical" onclick="filterByChip('critical')">
+        <div class="stat-title">Critical Defects</div>
+        <div class="stat-value" id="stat-critical">-</div>
+      </div>
     </div>
   </section>
 
-  <!-- Workspace -->
+  <!-- Main Body Workspace -->
   <div class="container">
-    <!-- Sidebar / File List -->
+    <!-- Left Sidebar: Test Pages -->
     <aside class="sidebar">
-      <div class="sidebar-header">Test Pages Suite</div>
+      <div class="sidebar-header">Bounded Test Pack (5 Pages)</div>
       <ul class="page-list" id="page-list">
-        <!-- Rendered dynamically -->
+        <!-- Injected via JavaScript -->
       </ul>
     </aside>
 
     <!-- Center Workspace -->
     <main class="workspace">
-      <!-- Live Preview -->
+      <!-- Live Preview Frame -->
       <section class="preview-pane">
         <div class="pane-header">
-          <span id="preview-title">Interactive Page Preview</span>
-          <span id="preview-url" style="color: var(--text-muted); font-size: 0.75rem;"></span>
+          <div class="pane-header-left">
+            <span class="badge badge-moderate">Document Preview</span>
+            <strong class="pane-header-title" id="preview-title">Loading...</strong>
+          </div>
+          <div class="pane-header-actions">
+            <button class="btn-icon" onclick="reloadPreview()" title="Reload test page">
+              ↻ Reload
+            </button>
+            <a class="btn-icon" id="preview-newtab" target="_blank" href="#" title="Open in new window">
+              ↗ New Tab
+            </a>
+          </div>
         </div>
         <iframe id="preview-frame" class="preview-iframe" src="about:blank"></iframe>
       </section>
 
-      <!-- Violations List -->
+      <!-- Right Pane: Violations Findings -->
       <section class="violations-pane">
         <div class="pane-header">
-          <span>Detected WCAG Barriers (<span id="violations-count">0</span>)</span>
+          <strong style="font-size: 0.875rem;">WCAG Findings (<span id="violations-count">0</span>)</strong>
         </div>
+        
+        <!-- Search & Filter Controls -->
+        <div class="filter-bar">
+          <input type="text" id="search-input" class="search-input" placeholder="🔍 Search violations, selectors, rule IDs..." oninput="handleSearch()">
+          <div class="filter-chips">
+            <button class="chip active" data-filter="all" onclick="filterByChip('all')">All</button>
+            <button class="chip" data-filter="critical" onclick="filterByChip('critical')">Critical</button>
+            <button class="chip" data-filter="serious" onclick="filterByChip('serious')">Serious</button>
+            <button class="chip" data-filter="moderate" onclick="filterByChip('moderate')">Moderate</button>
+          </div>
+        </div>
+
+        <!-- Cards List -->
         <div class="violations-content" id="violations-content">
           <!-- Rendered dynamically -->
         </div>
@@ -377,10 +675,84 @@
     </main>
   </div>
 
+  <!-- How to Use Modal -->
+  <div class="modal-backdrop" id="guide-modal" onclick="if(event.target === this) toggleModal(false)">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 style="font-size: 1.25rem; font-weight: 700;">How to Use AI Accessibility Auditor</h2>
+        <button class="btn-icon" onclick="toggleModal(false)" style="font-size: 1.1rem; padding: 0.2rem 0.5rem;">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Welcome to the <strong>AI Accessibility (WCAG 2.1 AA) & UI Regression Auditor</strong>. This platform provides continuous, deterministic DOM and CSS contrast verification combined with AI-assisted cognitive remediation.</p>
+
+        <h3>1. Web Dashboard Usage (Browser)</h3>
+        <ol>
+          <li><strong>Select Test Page</strong>: Click on any page in the left sidebar (e.g. <code>01_ecommerce_checkout.html</code>) to load its live rendered interface in the center iframe.</li>
+          <li><strong>Inspect Violations</strong>: Review the detected WCAG barriers on the right side. Each card shows the standard Rule ID, exact DOM CSS selector, and root cause explanation.</li>
+          <li><strong>Copy Fixes</strong>: Click the <code>Copy Fix</code> button to grab the drop-in compliant HTML replacement.</li>
+          <li><strong>Trigger Re-Audit</strong>: Click <code>⚡ Run Live Audit</code> in the header to re-execute the engine against the files dynamically.</li>
+        </ol>
+
+        <h3>2. CLI Usage (Terminal)</h3>
+        <p>You can run the deterministic audit engine directly from your command line:</p>
+        <p><code>python main.py</code></p>
+        <p>This generates a formatted CLI report and writes structured results to <code>output/initial_audit_report.json</code>.</p>
+
+        <h3>3. Active WCAG Rules Covered</h3>
+        <ul>
+          <li><strong>WCAG-1.1.1 (Level A)</strong>: Missing Image Alt Text</li>
+          <li><strong>WCAG-1.3.1 (Level A)</strong>: Form Input Missing Labels / Placeholder Only</li>
+          <li><strong>WCAG-1.4.3 (Level AA)</strong>: Insufficient Color Contrast (&lt; 4.5:1 for text)</li>
+          <li><strong>WCAG-1.3.1 (Level A)</strong>: Heading Hierarchy Skips (e.g. h1 &rarr; h4)</li>
+          <li><strong>WCAG-3.1.1 (Level A)</strong>: Missing Document Language (<code>&lt;html lang="en"&gt;</code>)</li>
+          <li><strong>WCAG-4.1.2 (Level A)</strong>: Invalid Interactive ARIA (e.g. fake button without tabindex)</li>
+          <li><strong>WCAG-2.4.4 (Level A)</strong>: Ambiguous Link Text ("Click here", "Read more")</li>
+          <li><strong>WCAG-2.4.7 (Level AA)</strong>: Focus Outline Suppressed (<code>outline: none</code>)</li>
+        </ul>
+
+        <h3>4. Urdu Quick Summary (خلاصہ)</h3>
+        <p>یہ ٹول ویب پیجز کا خودکار جائزہ لیتا ہے اور معذور افراد (نابینا اور کی بورڈ صارفین) کے لیے رکاوٹ بننے والے مسائل جیسے کہ کم کنٹراسٹ، بغیر لیبل فارم اور مسنگ امیج آلٹ ٹیکسٹ کو تلاش کر کے ان کا فوری حل (کوڈ پیچ) فراہم کرتا ہے۔</p>
+
+        <div style="text-align: right; margin-top: 1.5rem;">
+          <button class="btn" onclick="toggleModal(false)">Got it, let's audit!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     let auditData = null;
     let selectedPageIndex = 0;
+    let currentFilter = 'all';
+    let searchQuery = '';
 
+    // Theme Management
+    function initTheme() {
+      const saved = localStorage.getItem('wcag_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+      updateThemeButton(saved);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('wcag_theme', next);
+      updateThemeButton(next);
+    }
+
+    function updateThemeButton(theme) {
+      const btn = document.getElementById('theme-toggle-btn');
+      btn.innerHTML = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+    }
+
+    // Modal Management
+    function toggleModal(show) {
+      const modal = document.getElementById('guide-modal');
+      modal.classList.toggle('open', show);
+    }
+
+    // Audit Data Fetching
     async function fetchAudit(forceRun = false) {
       const btn = document.getElementById('run-audit-btn');
       const icon = document.getElementById('btn-icon');
@@ -388,7 +760,7 @@
       icon.textContent = '⏳';
 
       try {
-        const url = forceRun ? '/api/audit?run=1' : '/output/initial_audit_report.json';
+        const url = forceRun ? '/api/audit' : '/output/initial_audit_report.json';
         const res = await fetch(url);
         auditData = await res.json();
         renderDashboard();
@@ -421,8 +793,8 @@
         const isPass = page.status === 'PASSED';
         li.innerHTML = `
           <span class="page-name">${page.page_name}</span>
-          <span class="badge ${isPass ? 'badge-pass' : 'badge-error'}">
-            ${isPass ? '0 Violations' : page.total_violations + ' Issues'}
+          <span class="badge ${isPass ? 'badge-success' : 'badge-critical'}">
+            ${isPass ? '✓ 0 Issues' : page.total_violations + ' Defects'}
           </span>
         `;
         listEl.appendChild(li);
@@ -439,52 +811,129 @@
       renderSelectedPage();
     }
 
+    function reloadPreview() {
+      const page = auditData.results[selectedPageIndex];
+      if (page) {
+        const frame = document.getElementById('preview-frame');
+        frame.src = `/test_pages/${page.page_name}`;
+      }
+    }
+
     function renderSelectedPage() {
       const page = auditData.results[selectedPageIndex];
       if (!page) return;
 
-      // Update Preview Frame
-      const frame = document.getElementById('preview-frame');
+      // Update Preview Frame & Link
       const previewUrl = `/test_pages/${page.page_name}`;
+      const frame = document.getElementById('preview-frame');
       frame.src = previewUrl;
       document.getElementById('preview-title').textContent = page.page_name;
-      document.getElementById('preview-url').textContent = previewUrl;
+      document.getElementById('preview-newtab').href = previewUrl;
 
-      // Update Violations List
+      renderViolationsList();
+    }
+
+    function filterByChip(filterName) {
+      currentFilter = filterName.toLowerCase();
+      document.querySelectorAll('.chip').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-filter') === currentFilter);
+      });
+      renderViolationsList();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+      renderViolationsList();
+    }
+
+    function renderViolationsList() {
+      const page = auditData.results[selectedPageIndex];
+      if (!page) return;
+
       const vContent = document.getElementById('violations-content');
-      document.getElementById('violations-count').textContent = page.total_violations;
       vContent.innerHTML = '';
 
       if (page.total_violations === 0) {
+        document.getElementById('violations-count').textContent = '0';
         vContent.innerHTML = `
           <div class="compliant-banner">
-            <div class="compliant-icon">🎉</div>
-            <h3 style="color: #10b981; margin-bottom: 0.5rem;">100% WCAG 2.1 AA Compliant!</h3>
-            <p style="color: #94a3b8; font-size: 0.85rem;">Zero accessibility barriers detected. Fully compatible with assistive screen readers and keyboard navigation.</p>
+            <div class="compliant-badge-big">✓</div>
+            <h3 style="color: var(--success); margin-bottom: 0.5rem; font-size: 1.15rem;">100% WCAG 2.1 AA Compliant!</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; max-width: 340px;">
+              Zero accessibility barriers detected. This page conforms with screen-reader pronunciation, keyboard tab focus, and high-contrast standards.
+            </p>
           </div>
         `;
         return;
       }
 
-      page.violations.forEach(v => {
+      // Filter violations
+      const filtered = page.violations.filter(v => {
+        const matchesSeverity = currentFilter === 'all' || v.severity.toLowerCase() === currentFilter;
+        const matchesSearch = !searchQuery || 
+          v.rule_id.toLowerCase().includes(searchQuery) ||
+          v.rule_name.toLowerCase().includes(searchQuery) ||
+          v.dom_selector.toLowerCase().includes(searchQuery) ||
+          v.issue_explanation.toLowerCase().includes(searchQuery);
+        return matchesSeverity && matchesSearch;
+      });
+
+      document.getElementById('violations-count').textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        vContent.innerHTML = `
+          <div style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">
+            No violations match the current filter or search criteria.
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(v => {
         const card = document.createElement('div');
         const sevClass = v.severity.toLowerCase();
         card.className = `violation-card ${sevClass}`;
+        
         card.innerHTML = `
-          <div class="v-header">
-            <span class="v-rule">${v.rule_id}</span>
-            <span class="badge badge-error" style="text-transform: capitalize;">${v.severity}</span>
+          <div class="violation-top">
+            <span class="violation-rule-id">${v.rule_id}</span>
+            <span class="badge badge-${sevClass}">${v.severity}</span>
           </div>
-          <div class="v-title">${v.rule_name}</div>
-          <div class="v-selector">${v.dom_selector}</div>
-          <div class="v-desc">${v.issue_explanation}</div>
-          <div class="v-fix"><strong>Remediation:</strong> ${v.suggested_fix}</div>
+          <div class="violation-title">${v.rule_name}</div>
+          <div class="violation-selector">${escapeHtml(v.dom_selector)}</div>
+          <div class="violation-desc">${v.issue_explanation}</div>
+          <div class="violation-fix-box">
+            <div class="fix-code"><strong>Fix:</strong> ${escapeHtml(v.suggested_fix)}</div>
+            <button class="btn-copy" onclick="copyFix(this, '${escapeForAttr(v.suggested_fix)}')">📋 Copy</button>
+          </div>
         `;
         vContent.appendChild(card);
       });
     }
 
-    window.addEventListener('DOMContentLoaded', () => fetchAudit(false));
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function escapeForAttr(text) {
+      if (!text) return '';
+      return text.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+    }
+
+    function copyFix(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => { btn.textContent = orig; }, 1800);
+      });
+    }
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      fetchAudit(false);
+    });
   </script>
 </body>
 </html>

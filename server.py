@@ -1,24 +1,29 @@
 """
 Web Dashboard Server for AI Accessibility (WCAG) & UI Regression Auditor.
-Serves interactive audit interface, dynamic re-audit API, and test pack pages.
+Serves interactive audit interface, dynamic re-audit API, test pack pages,
+and graceful link simulation fallbacks.
 """
 
-import os
 import sys
 import json
 from pathlib import Path
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import urllib.parse
+from datetime import datetime, timezone
 
 from auditor.rules import audit_page_file
 from auditor.models import AuditSummaryReport, Severity
-from datetime import datetime, timezone
 
 BASE_DIR = Path(__file__).resolve().parent
 PORT = 8000
 
 
 class AuditorRequestHandler(SimpleHTTPRequestHandler):
+    def log_message(self, format, *args):
+        # Flush stdout immediately
+        sys.stdout.write(f"[{datetime.now().strftime('%H:%M:%S')}] {format % args}\n")
+        sys.stdout.flush()
+
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
@@ -30,13 +35,20 @@ class AuditorRequestHandler(SimpleHTTPRequestHandler):
         elif path.startswith("/test_pages/"):
             filename = path.replace("/test_pages/", "")
             target = BASE_DIR / "test_pages" / filename
-            self.serve_file(target, "text/html")
+            if target.exists() and target.is_file():
+                self.serve_file(target, "text/html")
+            else:
+                self.serve_simulated_destination(path)
         elif path.startswith("/output/"):
             filename = path.replace("/output/", "")
             target = BASE_DIR / "output" / filename
-            self.serve_file(target, "application/json")
+            if target.exists() and target.is_file():
+                self.serve_file(target, "application/json")
+            else:
+                self.send_error(404, "Report not found")
         else:
-            super().do_GET()
+            # Fallback for relative links clicked inside preview iframe (e.g. /research/...)
+            self.serve_simulated_destination(path)
 
     def serve_file(self, file_path: Path, content_type: str):
         if not file_path.exists():
@@ -47,6 +59,86 @@ class AuditorRequestHandler(SimpleHTTPRequestHandler):
         self.send_header("Content-Type", f"{content_type}; charset=utf-8")
         self.send_header("Content-Length", str(len(data)))
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+        self.end_headers()
+        self.wfile.write(data)
+
+    def serve_simulated_destination(self, requested_path: str):
+        """Friendly destination page when links are clicked inside preview iframes."""
+        html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulated Navigation Target</title>
+  <style>
+    body {{
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f8fafc;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1rem;
+    }}
+    .card {{
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }}
+    .badge {{
+      background: #e0e7ff;
+      color: #4338ca;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }}
+    code {{
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }}
+    button {{
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 0.65rem 1.25rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1.5rem;
+    }}
+    button:hover {{ background: #4338ca; }}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">Simulated Link Target</span>
+    <h3 style="margin: 0 0 0.5rem 0; color: #0f172a;">Sample Link Navigation</h3>
+    <p style="font-size: 0.9rem; line-height: 1.5; color: #64748b;">
+      You clicked a test link pointing to: <br><code>{requested_path}</code>
+    </p>
+    <p style="font-size: 0.825rem; color: #94a3b8;">
+      This link is part of the bounded accessibility test pack to audit link ambiguity (WCAG 2.4.4).
+    </p>
+    <button onclick="history.back()">← Return to Page</button>
+  </div>
+</body>
+</html>"""
+        data = html.encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(data)))
         self.end_headers()
         self.wfile.write(data)
 
@@ -87,7 +179,6 @@ class AuditorRequestHandler(SimpleHTTPRequestHandler):
             results=page_results,
         )
 
-        # Save to disk
         output_file = BASE_DIR / "output" / "initial_audit_report.json"
         output_file.write_text(json.dumps(summary_report.model_dump(), indent=2), encoding="utf-8")
 
@@ -103,6 +194,7 @@ class AuditorRequestHandler(SimpleHTTPRequestHandler):
 def run_server():
     server = HTTPServer(("127.0.0.1", PORT), AuditorRequestHandler)
     print(f"[*] AI Accessibility Auditor Web Server listening on http://127.0.0.1:{PORT}")
+    sys.stdout.flush()
     try:
         server.serve_forever()
     except KeyboardInterrupt:
