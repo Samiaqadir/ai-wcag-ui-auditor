@@ -1,0 +1,81 @@
+{
+  "page_name": "03_signup_form.html",
+  "file_path": "C:\\Users\\samia\\OneDrive\\Desktop\\Smj projects\\AI Accessibility (WCAG) & UI Regression Auditor\\test_pages\\03_signup_form.html",
+  "total_violations": 6,
+  "violations_by_severity": {
+    "Critical": 4,
+    "Serious": 2,
+    "Moderate": 0,
+    "Minor": 0
+  },
+  "violations": [
+    {
+      "rule_id": "WCAG-1.3.1",
+      "rule_name": "Missing Form Input Label",
+      "severity": "Critical",
+      "dom_selector": "#fullname-input",
+      "raw_html_snippet": "<input id=\"fullname-input\" name=\"fullname\" placeholder=\"Full legal name\" type=\"text\"/>",
+      "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='Full legal name' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+      "suggested_fix": "<label for=\"fullname-input\">Field Label</label> or aria-label=\"Field Label\"",
+      "before_html": "<input id=\"fullname-input\" name=\"fullname\" placeholder=\"Full legal name\" type=\"text\"/>",
+      "after_html": "<label for=\"fullname-input\" class=\"form-label\">Full legal name</label>\n<input id=\"fullname-input\" name=\"fullname\" placeholder=\"Full legal name\" type=\"text\"/>"
+    },
+    {
+      "rule_id": "WCAG-1.3.1",
+      "rule_name": "Missing Form Input Label",
+      "severity": "Critical",
+      "dom_selector": "#email-input",
+      "raw_html_snippet": "<input id=\"email-input\" name=\"email\" placeholder=\"work.email@company.com\" type=\"email\"/>",
+      "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='work.email@company.com' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+      "suggested_fix": "<label for=\"email-input\">Field Label</label> or aria-label=\"Field Label\"",
+      "before_html": "<input id=\"email-input\" name=\"email\" placeholder=\"work.email@company.com\" type=\"email\"/>",
+      "after_html": "<label for=\"email-input\" class=\"form-label\">work.email@company.com</label>\n<input id=\"email-input\" name=\"email\" placeholder=\"work.email@company.com\" type=\"email\"/>"
+    },
+    {
+      "rule_id": "WCAG-1.3.1",
+      "rule_name": "Missing Form Input Label",
+      "severity": "Critical",
+      "dom_selector": "#password-input",
+      "raw_html_snippet": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>",
+      "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='Create secure password' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+      "suggested_fix": "<label for=\"password-input\">Field Label</label> or aria-label=\"Field Label\"",
+      "before_html": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>",
+      "after_html": "<label for=\"password-input\" class=\"form-label\">Create secure password</label>\n<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>"
+    },
+    {
+      "rule_id": "WCAG-4.1.2",
+      "rule_name": "Non-Focusable Interactive Element",
+      "severity": "Critical",
+      "dom_selector": "#fake-submit-btn",
+      "raw_html_snippet": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>",
+      "issue_explanation": "Element <div role='button'> specifies an interactive role but lacks tabindex='0'. Keyboard-only users cannot tab to or activate this custom element.",
+      "suggested_fix": "Replace with native <button> or add tabindex=\"0\" and keyboard activation handlers (Enter/Space).",
+      "before_html": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>",
+      "after_html": "<button type=\"submit\" id=\"fake-submit-btn\" class=\"btn-fake-button\">Sign Up with Workspace</button>"
+    },
+    {
+      "rule_id": "WCAG-AI-2.1.2",
+      "rule_name": "Disruptive Positive Tabindex",
+      "severity": "Serious",
+      "dom_selector": "#password-input",
+      "raw_html_snippet": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>",
+      "issue_explanation": "Element specifies positive tabindex='5'. Positive tabindex forces an unnatural focus sequence, bypassing preceding interactive elements for keyboard navigators.",
+      "suggested_fix": "Use tabindex=\"0\" to preserve natural DOM order or restructure HTML hierarchy.",
+      "before_html": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>",
+      "after_html": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"0\" type=\"password\"/>"
+    },
+    {
+      "rule_id": "WCAG-AI-2.1.2",
+      "rule_name": "Interactive Element Unreachable via Keyboard",
+      "severity": "Serious",
+      "dom_selector": "#fake-submit-btn",
+      "raw_html_snippet": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>",
+      "issue_explanation": "Interactive control '#fake-submit-btn' was not reachable during simulated keyboard Tab traversal. Keyboard-dependent users cannot access or activate this function.",
+      "suggested_fix": "Ensure element is in DOM tab sequence (tabindex=\"0\") and not suppressed by CSS pointer-events.",
+      "before_html": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>",
+      "after_html": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>"
+    }
+  ],
+  "status": "FAILED",
+  "timestamp": "2026-11-24T08:04:44.251030+00:00"
+}

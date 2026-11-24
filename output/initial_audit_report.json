@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-11-23T17:18:24.482785+00:00",
-  "engine_version": "1.0.0-day1",
+  "timestamp": "2026-11-24T08:04:46.095495+00:00",
+  "engine_version": "2.0.0-day2",
   "total_pages_scanned": 5,
   "passed_pages": 1,
   "failed_pages": 4,
-  "total_violations": 22,
+  "total_violations": 24,
   "violations_by_severity": {
     "Critical": 12,
-    "Serious": 5,
+    "Serious": 7,
     "Moderate": 5,
     "Minor": 0
   },
@@ -29,8 +29,10 @@
           "severity": "Critical",
           "dom_selector": "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(1) > img.product-img",
           "raw_html_snippet": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%236366f1'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\"/> ... </img>",
-          "issue_explanation": "The <img> element is missing an 'alt' attribute. Screen readers cannot describe the visual content to users with visual impairments and may speak the raw file name.",
-          "suggested_fix": "Add a descriptive alt attribute (e.g. alt=\"Product name and specifications\") or alt=\"\" if decorative."
+          "issue_explanation": "The <img> element is completely missing an 'alt' attribute. Screen readers cannot describe the visual content to users with visual impairments and may announce the raw image URL.",
+          "suggested_fix": "Add a descriptive alt attribute, e.g. alt=\"Description of image\", or alt=\"\" if decorative.",
+          "before_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%236366f1'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\"/> ... </img>",
+          "after_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%236366f1'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\" alt=\"Ultra-Light Wireless Noise Cancelling Headphones\"> ... </img>"
         },
         {
           "rule_id": "WCAG-1.1.1",
@@ -38,8 +40,10 @@
           "severity": "Critical",
           "dom_selector": "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(2) > img.product-img",
           "raw_html_snippet": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%2310b981'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\"/> ... </img>",
-          "issue_explanation": "The <img> element is missing an 'alt' attribute. Screen readers cannot describe the visual content to users with visual impairments and may speak the raw file name.",
-          "suggested_fix": "Add a descriptive alt attribute (e.g. alt=\"Product name and specifications\") or alt=\"\" if decorative."
+          "issue_explanation": "The <img> element is completely missing an 'alt' attribute. Screen readers cannot describe the visual content to users with visual impairments and may announce the raw image URL.",
+          "suggested_fix": "Add a descriptive alt attribute, e.g. alt=\"Description of image\", or alt=\"\" if decorative.",
+          "before_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%2310b981'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\"/> ... </img>",
+          "after_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%2310b981'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\" alt=\"Braided Fast-Charging USB-C Cable (2m)\"> ... </img>"
         },
         {
           "rule_id": "WCAG-1.3.1",
@@ -47,8 +51,10 @@
           "severity": "Critical",
           "dom_selector": "#cardholder-name",
           "raw_html_snippet": "<input class=\"form-control\" id=\"cardholder-name\" placeholder=\"Cardholder Full Name\" type=\"text\"/>",
-          "issue_explanation": "Form control <input> lacks a programmatic label (<label for='...'>, wrapping <label>, or aria-label). Relying solely on placeholder='Cardholder Full Name' violates WCAG 3.3.2 because placeholders disappear on input and are not reliably announced by all assistive technologies.",
-          "suggested_fix": "<label for=\"cardholder-name\">Descriptive Label</label> or add aria-label=\"Descriptive Label\" to the <input> element."
+          "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='Cardholder Full Name' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+          "suggested_fix": "<label for=\"cardholder-name\">Field Label</label> or aria-label=\"Field Label\"",
+          "before_html": "<input class=\"form-control\" id=\"cardholder-name\" placeholder=\"Cardholder Full Name\" type=\"text\"/>",
+          "after_html": "<label for=\"cardholder-name\" class=\"form-label\">Cardholder Full Name</label>\n<input class=\"form-control\" id=\"cardholder-name\" placeholder=\"Cardholder Full Name\" type=\"text\"/>"
         },
         {
           "rule_id": "WCAG-1.3.1",
@@ -56,8 +62,10 @@
           "severity": "Critical",
           "dom_selector": "#cc-number",
           "raw_html_snippet": "<input class=\"form-control\" id=\"cc-number\" placeholder=\"Credit Card Number (16 digits)\" type=\"text\"/>",
-          "issue_explanation": "Form control <input> lacks a programmatic label (<label for='...'>, wrapping <label>, or aria-label). Relying solely on placeholder='Credit Card Number (16 digits)' violates WCAG 3.3.2 because placeholders disappear on input and are not reliably announced by all assistive technologies.",
-          "suggested_fix": "<label for=\"cc-number\">Descriptive Label</label> or add aria-label=\"Descriptive Label\" to the <input> element."
+          "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='Credit Card Number (16 digits)' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+          "suggested_fix": "<label for=\"cc-number\">Field Label</label> or aria-label=\"Field Label\"",
+          "before_html": "<input class=\"form-control\" id=\"cc-number\" placeholder=\"Credit Card Number (16 digits)\" type=\"text\"/>",
+          "after_html": "<label for=\"cc-number\" class=\"form-label\">Credit Card Number (16 digits)</label>\n<input class=\"form-control\" id=\"cc-number\" placeholder=\"Credit Card Number (16 digits)\" type=\"text\"/>"
         },
         {
           "rule_id": "WCAG-1.3.1",
@@ -65,8 +73,10 @@
           "severity": "Critical",
           "dom_selector": "#cc-expiry",
           "raw_html_snippet": "<input class=\"form-control\" id=\"cc-expiry\" placeholder=\"MM/YY\" type=\"text\"/>",
-          "issue_explanation": "Form control <input> lacks a programmatic label (<label for='...'>, wrapping <label>, or aria-label). Relying solely on placeholder='MM/YY' violates WCAG 3.3.2 because placeholders disappear on input and are not reliably announced by all assistive technologies.",
-          "suggested_fix": "<label for=\"cc-expiry\">Descriptive Label</label> or add aria-label=\"Descriptive Label\" to the <input> element."
+          "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='MM/YY' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+          "suggested_fix": "<label for=\"cc-expiry\">Field Label</label> or aria-label=\"Field Label\"",
+          "before_html": "<input class=\"form-control\" id=\"cc-expiry\" placeholder=\"MM/YY\" type=\"text\"/>",
+          "after_html": "<label for=\"cc-expiry\" class=\"form-label\">MM/YY</label>\n<input class=\"form-control\" id=\"cc-expiry\" placeholder=\"MM/YY\" type=\"text\"/>"
         },
         {
           "rule_id": "WCAG-1.3.1",
@@ -74,21 +84,25 @@
           "severity": "Critical",
           "dom_selector": "#cc-cvv",
           "raw_html_snippet": "<input class=\"form-control\" id=\"cc-cvv\" placeholder=\"CVV\" type=\"password\"/>",
-          "issue_explanation": "Form control <input> lacks a programmatic label (<label for='...'>, wrapping <label>, or aria-label). Relying solely on placeholder='CVV' violates WCAG 3.3.2 because placeholders disappear on input and are not reliably announced by all assistive technologies.",
-          "suggested_fix": "<label for=\"cc-cvv\">Descriptive Label</label> or add aria-label=\"Descriptive Label\" to the <input> element."
+          "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='CVV' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+          "suggested_fix": "<label for=\"cc-cvv\">Field Label</label> or aria-label=\"Field Label\"",
+          "before_html": "<input class=\"form-control\" id=\"cc-cvv\" placeholder=\"CVV\" type=\"password\"/>",
+          "after_html": "<label for=\"cc-cvv\" class=\"form-label\">CVV</label>\n<input class=\"form-control\" id=\"cc-cvv\" placeholder=\"CVV\" type=\"password\"/>"
         },
         {
           "rule_id": "WCAG-1.4.3",
           "rule_name": "Insufficient Color Contrast Ratio",
           "severity": "Serious",
           "dom_selector": "#btn-submit-payment",
-          "raw_html_snippet": "<button class=\"btn-pay-broken\" id=\"btn-submit-payment\" type=\"submit\">\n            Pay Now $228.00\n          </button>",
-          "issue_explanation": "Computed contrast ratio is 2.18:1, which fails WCAG AA minimum threshold of 4.5:1 (foreground '#9ca3af' on background '#fef08a'). Users with low vision or color perception deficiencies will struggle to read this content.",
-          "suggested_fix": "Adjust foreground or background color to achieve at least 4.5:1 contrast ratio."
+          "raw_html_snippet": "<button type=\"submit\" id=\"btn-submit-payment\" class=\"btn-pay-broken\">\n            Pay Now $228.00\n          </button>",
+          "issue_explanation": "Computed contrast ratio is 2.18:1, failing WCAG AA threshold of 4.5:1 (computed foreground 'rgb(156, 163, 175)' on background 'rgb(254, 240, 138)'). Users with low vision or color blindness cannot comfortably perceive this text.",
+          "suggested_fix": "Adjust text or background color to satisfy minimum 4.5:1 contrast ratio.",
+          "before_html": "<button type=\"submit\" id=\"btn-submit-payment\" class=\"btn-pay-broken\">\n            Pay Now $228.00\n          </button>",
+          "after_html": "<button type=\"submit\" id=\"btn-submit-payment\" class=\"btn-pay-broken\" style=\"background-color: #15803d; color: #ffffff; font-weight: 700;\">\n  Pay Now $228.00\n</button>"
         }
       ],
       "status": "FAILED",
-      "timestamp": "2026-11-23T17:18:24.468349+00:00"
+      "timestamp": "2026-11-24T08:04:42.399505+00:00"
     },
     {
       "page_name": "02_saas_dashboard.html",
@@ -107,8 +121,10 @@
           "severity": "Serious",
           "dom_selector": "main.dashboard-content > div.card-grid > div.card:nth-of-type(1) > span",
           "raw_html_snippet": "<span style=\"color: #16a34a;\">\u2191 Optimal performance</span>",
-          "issue_explanation": "Computed contrast ratio is 3.3:1, which fails WCAG AA minimum threshold of 4.5:1 (foreground '#16a34a' on background '#ffffff'). Users with low vision or color perception deficiencies will struggle to read this content.",
-          "suggested_fix": "Adjust foreground or background color to achieve at least 4.5:1 contrast ratio."
+          "issue_explanation": "Computed contrast ratio is 3.3:1, failing WCAG AA threshold of 4.5:1 (computed foreground 'rgb(22, 163, 74)' on background 'rgb(255, 255, 255)'). Users with low vision or color blindness cannot comfortably perceive this text.",
+          "suggested_fix": "Adjust text or background color to satisfy minimum 4.5:1 contrast ratio.",
+          "before_html": "<span style=\"color: #16a34a;\">\u2191 Optimal performance</span>",
+          "after_html": "<span style=\"color: #15803d; font-weight: 600;\">\u2191 Optimal performance</span>"
         },
         {
           "rule_id": "WCAG-1.4.3",
@@ -116,17 +132,21 @@
           "severity": "Serious",
           "dom_selector": "#cluster-status-badge",
           "raw_html_snippet": "<span class=\"status-badge-inactive\" id=\"cluster-status-badge\">Standby Mode</span>",
-          "issue_explanation": "Computed contrast ratio is 2.45:1, which fails WCAG AA minimum threshold of 4.5:1 (foreground '#94a3b8' on background '#f8fafc'). Users with low vision or color perception deficiencies will struggle to read this content.",
-          "suggested_fix": "Adjust foreground or background color to achieve at least 4.5:1 contrast ratio."
+          "issue_explanation": "Computed contrast ratio is 2.45:1, failing WCAG AA threshold of 4.5:1 (computed foreground 'rgb(148, 163, 184)' on background 'rgb(248, 250, 252)'). Users with low vision or color blindness cannot comfortably perceive this text.",
+          "suggested_fix": "Adjust text or background color to satisfy minimum 4.5:1 contrast ratio.",
+          "before_html": "<span class=\"status-badge-inactive\" id=\"cluster-status-badge\">Standby Mode</span>",
+          "after_html": "<span class=\"status-badge-inactive\" id=\"cluster-status-badge\" style=\"background-color: #e2e8f0; color: #1e293b; font-weight: 600;\">Standby Mode</span>"
         },
         {
-          "rule_id": "WCAG-1.3.1",
+          "rule_id": "WCAG-1.3.1H",
           "rule_name": "Heading Hierarchy Skip",
           "severity": "Moderate",
           "dom_selector": "main.dashboard-content > h4",
           "raw_html_snippet": "<h4>Real-time Infrastructure Status</h4>",
-          "issue_explanation": "Heading hierarchy skips from <h1> directly to <h4>. Skipping heading levels (e.g. omitting intermediate <h2>) breaks the outline structure that screen reader users rely on to build an accurate mental map of page content.",
-          "suggested_fix": "Change <h4> to <h2> or restructure sectioning to avoid skipped ranks."
+          "issue_explanation": "Heading structure jumps from <h1> directly to <h4>, skipping <h2>. Skipping heading levels creates a disjointed outline in screen reader navigation palettes.",
+          "suggested_fix": "Change <h4> to <h2> or restructure document sections.",
+          "before_html": "<h4>Real-time Infrastructure Status</h4>",
+          "after_html": "<h2>Real-time Infrastructure Status</h2>"
         },
         {
           "rule_id": "WCAG-4.1.2",
@@ -135,7 +155,9 @@
           "dom_selector": "#notifications-btn",
           "raw_html_snippet": "<button class=\"icon-btn\" id=\"notifications-btn\"> ... </button>",
           "issue_explanation": "The <button> contains no readable text, aria-label, or image alt attribute. Screen readers will announce an unlabelled button, preventing users from understanding its action.",
-          "suggested_fix": "Add an aria-label attribute (e.g. aria-label=\"Notifications\") or include descriptive text."
+          "suggested_fix": "Add aria-label=\"Action Name\" or include descriptive text.",
+          "before_html": "<button class=\"icon-btn\" id=\"notifications-btn\"> ... </button>",
+          "after_html": "<button class=\"icon-btn\" id=\"notifications-btn\" aria-label=\"View user notifications\"> ... </button>"
         },
         {
           "rule_id": "WCAG-4.1.2",
@@ -144,20 +166,22 @@
           "dom_selector": "#settings-btn",
           "raw_html_snippet": "<button class=\"icon-btn\" id=\"settings-btn\" style=\"margin-left: 0.5rem;\"> ... </button>",
           "issue_explanation": "The <button> contains no readable text, aria-label, or image alt attribute. Screen readers will announce an unlabelled button, preventing users from understanding its action.",
-          "suggested_fix": "Add an aria-label attribute (e.g. aria-label=\"Notifications\") or include descriptive text."
+          "suggested_fix": "Add aria-label=\"Action Name\" or include descriptive text.",
+          "before_html": "<button class=\"icon-btn\" id=\"settings-btn\" style=\"margin-left: 0.5rem;\"> ... </button>",
+          "after_html": "<button class=\"icon-btn\" id=\"settings-btn\" style=\"margin-left: 0.5rem;\" aria-label=\"Open system settings\"> ... </button>"
         }
       ],
       "status": "FAILED",
-      "timestamp": "2026-11-23T17:18:24.472559+00:00"
+      "timestamp": "2026-11-24T08:04:43.350323+00:00"
     },
     {
       "page_name": "03_signup_form.html",
       "file_path": "C:\\Users\\samia\\OneDrive\\Desktop\\Smj projects\\AI Accessibility (WCAG) & UI Regression Auditor\\test_pages\\03_signup_form.html",
-      "total_violations": 5,
+      "total_violations": 6,
       "violations_by_severity": {
         "Critical": 4,
-        "Serious": 0,
-        "Moderate": 1,
+        "Serious": 2,
+        "Moderate": 0,
         "Minor": 0
       },
       "violations": [
@@ -167,8 +191,10 @@
           "severity": "Critical",
           "dom_selector": "#fullname-input",
           "raw_html_snippet": "<input id=\"fullname-input\" name=\"fullname\" placeholder=\"Full legal name\" type=\"text\"/>",
-          "issue_explanation": "Form control <input> lacks a programmatic label (<label for='...'>, wrapping <label>, or aria-label). Relying solely on placeholder='Full legal name' violates WCAG 3.3.2 because placeholders disappear on input and are not reliably announced by all assistive technologies.",
-          "suggested_fix": "<label for=\"fullname-input\">Descriptive Label</label> or add aria-label=\"Descriptive Label\" to the <input> element."
+          "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='Full legal name' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+          "suggested_fix": "<label for=\"fullname-input\">Field Label</label> or aria-label=\"Field Label\"",
+          "before_html": "<input id=\"fullname-input\" name=\"fullname\" placeholder=\"Full legal name\" type=\"text\"/>",
+          "after_html": "<label for=\"fullname-input\" class=\"form-label\">Full legal name</label>\n<input id=\"fullname-input\" name=\"fullname\" placeholder=\"Full legal name\" type=\"text\"/>"
         },
         {
           "rule_id": "WCAG-1.3.1",
@@ -176,8 +202,10 @@
           "severity": "Critical",
           "dom_selector": "#email-input",
           "raw_html_snippet": "<input id=\"email-input\" name=\"email\" placeholder=\"work.email@company.com\" type=\"email\"/>",
-          "issue_explanation": "Form control <input> lacks a programmatic label (<label for='...'>, wrapping <label>, or aria-label). Relying solely on placeholder='work.email@company.com' violates WCAG 3.3.2 because placeholders disappear on input and are not reliably announced by all assistive technologies.",
-          "suggested_fix": "<label for=\"email-input\">Descriptive Label</label> or add aria-label=\"Descriptive Label\" to the <input> element."
+          "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='work.email@company.com' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+          "suggested_fix": "<label for=\"email-input\">Field Label</label> or aria-label=\"Field Label\"",
+          "before_html": "<input id=\"email-input\" name=\"email\" placeholder=\"work.email@company.com\" type=\"email\"/>",
+          "after_html": "<label for=\"email-input\" class=\"form-label\">work.email@company.com</label>\n<input id=\"email-input\" name=\"email\" placeholder=\"work.email@company.com\" type=\"email\"/>"
         },
         {
           "rule_id": "WCAG-1.3.1",
@@ -185,8 +213,10 @@
           "severity": "Critical",
           "dom_selector": "#password-input",
           "raw_html_snippet": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>",
-          "issue_explanation": "Form control <input> lacks a programmatic label (<label for='...'>, wrapping <label>, or aria-label). Relying solely on placeholder='Create secure password' violates WCAG 3.3.2 because placeholders disappear on input and are not reliably announced by all assistive technologies.",
-          "suggested_fix": "<label for=\"password-input\">Descriptive Label</label> or add aria-label=\"Descriptive Label\" to the <input> element."
+          "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='Create secure password' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
+          "suggested_fix": "<label for=\"password-input\">Field Label</label> or aria-label=\"Field Label\"",
+          "before_html": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>",
+          "after_html": "<label for=\"password-input\" class=\"form-label\">Create secure password</label>\n<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>"
         },
         {
           "rule_id": "WCAG-4.1.2",
@@ -194,81 +224,117 @@
           "severity": "Critical",
           "dom_selector": "#fake-submit-btn",
           "raw_html_snippet": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>",
-          "issue_explanation": "Element <div role='button'> defines an interactive role but lacks tabindex='0'. Keyboard-only users cannot tab to or activate this custom control.",
-          "suggested_fix": "Replace with native <button> or add tabindex=\"0\" and keyboard event handlers (Enter/Space)."
+          "issue_explanation": "Element <div role='button'> specifies an interactive role but lacks tabindex='0'. Keyboard-only users cannot tab to or activate this custom element.",
+          "suggested_fix": "Replace with native <button> or add tabindex=\"0\" and keyboard activation handlers (Enter/Space).",
+          "before_html": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>",
+          "after_html": "<button type=\"submit\" id=\"fake-submit-btn\" class=\"btn-fake-button\">Sign Up with Workspace</button>"
         },
         {
-          "rule_id": "WCAG-2.4.3",
+          "rule_id": "WCAG-AI-2.1.2",
           "rule_name": "Disruptive Positive Tabindex",
-          "severity": "Moderate",
+          "severity": "Serious",
           "dom_selector": "#password-input",
           "raw_html_snippet": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>",
-          "issue_explanation": "Element specifies positive tabindex='5'. Using positive tabindex values disrupts natural DOM keyboard navigation order and creates unpredictable focus transitions for keyboard users.",
-          "suggested_fix": "Set tabindex=\"0\" to insert element into natural tab sequence, or rely on native DOM order."
+          "issue_explanation": "Element specifies positive tabindex='5'. Positive tabindex forces an unnatural focus sequence, bypassing preceding interactive elements for keyboard navigators.",
+          "suggested_fix": "Use tabindex=\"0\" to preserve natural DOM order or restructure HTML hierarchy.",
+          "before_html": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"5\" type=\"password\"/>",
+          "after_html": "<input id=\"password-input\" name=\"password\" placeholder=\"Create secure password\" tabindex=\"0\" type=\"password\"/>"
+        },
+        {
+          "rule_id": "WCAG-AI-2.1.2",
+          "rule_name": "Interactive Element Unreachable via Keyboard",
+          "severity": "Serious",
+          "dom_selector": "#fake-submit-btn",
+          "raw_html_snippet": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>",
+          "issue_explanation": "Interactive control '#fake-submit-btn' was not reachable during simulated keyboard Tab traversal. Keyboard-dependent users cannot access or activate this function.",
+          "suggested_fix": "Ensure element is in DOM tab sequence (tabindex=\"0\") and not suppressed by CSS pointer-events.",
+          "before_html": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>",
+          "after_html": "<div class=\"btn-fake-button\" id=\"fake-submit-btn\" role=\"button\">\n          Sign Up with Workspace\n        </div>"
         }
       ],
       "status": "FAILED",
-      "timestamp": "2026-11-23T17:18:24.475610+00:00"
+      "timestamp": "2026-11-24T08:04:44.251030+00:00"
     },
     {
       "page_name": "04_blog_article.html",
       "file_path": "C:\\Users\\samia\\OneDrive\\Desktop\\Smj projects\\AI Accessibility (WCAG) & UI Regression Auditor\\test_pages\\04_blog_article.html",
-      "total_violations": 5,
+      "total_violations": 6,
       "violations_by_severity": {
         "Critical": 0,
         "Serious": 2,
-        "Moderate": 3,
+        "Moderate": 4,
         "Minor": 0
       },
       "violations": [
+        {
+          "rule_id": "WCAG-1.3.1H",
+          "rule_name": "Heading Hierarchy Skip",
+          "severity": "Moderate",
+          "dom_selector": "article > div.author-bio > h3",
+          "raw_html_snippet": "<h3>About the Author</h3>",
+          "issue_explanation": "Heading structure jumps from <h1> directly to <h3>, skipping <h2>. Skipping heading levels creates a disjointed outline in screen reader navigation palettes.",
+          "suggested_fix": "Change <h3> to <h2> or restructure document sections.",
+          "before_html": "<h3>About the Author</h3>",
+          "after_html": "<h2>About the Author</h2>"
+        },
         {
           "rule_id": "WCAG-3.1.1",
           "rule_name": "Missing Document Language Attribute",
           "severity": "Serious",
           "dom_selector": "html",
           "raw_html_snippet": "<html>\n<head>\n<meta charset=\"utf-8\"/>\n<meta content=\"width=d...",
-          "issue_explanation": "The root <html> element is missing a valid 'lang' attribute. Without a language declaration, screen readers and speech synthesizers cannot determine the proper pronunciation rules, phonetics, or Braille translation table to apply.",
-          "suggested_fix": "Add a valid BCP 47 language code to the root element, e.g. <html lang=\"en\">."
+          "issue_explanation": "The root <html> element is missing a valid 'lang' attribute. Text-to-speech synthesizers cannot determine the appropriate pronunciation rules or Braille translation table.",
+          "suggested_fix": "Add a valid BCP 47 language code to the root element, e.g. <html lang=\"en\">.",
+          "before_html": "<html>\n<head>\n<meta charset=\"utf-8\"/>\n<meta content=\"width=d...",
+          "after_html": "<html lang=\"en\">"
         },
         {
-          "rule_id": "WCAG-1.3.1",
-          "rule_name": "Heading Hierarchy Skip",
-          "severity": "Moderate",
-          "dom_selector": "body > article > div.author-bio > h3",
-          "raw_html_snippet": "<h3>About the Author</h3>",
-          "issue_explanation": "Heading hierarchy skips from <h1> directly to <h3>. Skipping heading levels (e.g. omitting intermediate <h2>) breaks the outline structure that screen reader users rely on to build an accurate mental map of page content.",
-          "suggested_fix": "Change <h3> to <h2> or restructure sectioning to avoid skipped ranks."
-        },
-        {
-          "rule_id": "WCAG-2.4.4",
-          "rule_name": "Ambiguous Link Text",
+          "rule_id": "WCAG-AI-2.4.4",
+          "rule_name": "Ambiguous Link/Button Context",
           "severity": "Moderate",
           "dom_selector": "#ambiguous-link-1",
-          "raw_html_snippet": "<a href=\"https://www.w3.org/WAI/standards-guidelines/wcag/\" id=\"ambiguous-link-1\">Click here</a>",
-          "issue_explanation": "Link contains ambiguous text 'Click here' without descriptive context. Users navigating via screen reader link lists cannot determine the link target out of context.",
-          "suggested_fix": "Replace link text with self-describing destination (e.g. \"Read the full WCAG technical guidelines\")."
+          "raw_html_snippet": "<a href=\"https://www.w3.org/WAI/standards-guidelines/wcag/\" id=\"ambiguous-link-1\" target=\"_blank\">Click here</a>",
+          "issue_explanation": "Interactive element contains ambiguous text 'Click here'. When navigating out of context (e.g. in screen reader link lists), users cannot determine destination or intent.",
+          "suggested_fix": "Replace link text with self-describing destination or add informative aria-label.",
+          "before_html": "<a href=\"https://www.w3.org/WAI/standards-guidelines/wcag/\" id=\"ambiguous-link-1\" target=\"_blank\">Click here</a>",
+          "after_html": "<a href=\"https://www.w3.org/WAI/standards-guidelines/wcag/\" id=\"ambiguous-link-1\" target=\"_blank\">Read the full WCAG 2.1 guidelines</a>"
         },
         {
-          "rule_id": "WCAG-2.4.4",
-          "rule_name": "Ambiguous Link Text",
+          "rule_id": "WCAG-AI-2.4.4",
+          "rule_name": "Ambiguous Link/Button Context",
           "severity": "Moderate",
           "dom_selector": "#ambiguous-link-2",
-          "raw_html_snippet": "<a href=\"/research/survey-2026\" id=\"ambiguous-link-2\">Read more</a>",
-          "issue_explanation": "Link contains ambiguous text 'Read more' without descriptive context. Users navigating via screen reader link lists cannot determine the link target out of context.",
-          "suggested_fix": "Replace link text with self-describing destination (e.g. \"Read the full WCAG technical guidelines\")."
+          "raw_html_snippet": "<a href=\"#survey-2026\" id=\"ambiguous-link-2\" onclick=\"event.preventDefault(); alert('Demo Navigation: This is a placeholder test link.');\">Read more</a>",
+          "issue_explanation": "Interactive element contains ambiguous text 'Read more'. When navigating out of context (e.g. in screen reader link lists), users cannot determine destination or intent.",
+          "suggested_fix": "Replace link text with self-describing destination or add informative aria-label.",
+          "before_html": "<a href=\"#survey-2026\" id=\"ambiguous-link-2\" onclick=\"event.preventDefault(); alert('Demo Navigation: This is a placeholder test link.');\">Read more</a>",
+          "after_html": "<a href=\"#survey-2026\" id=\"ambiguous-link-2\" onclick=\"event.preventDefault(); alert('Demo Navigation: This is a placeholder test link.');\">Explore our 400-team accessibility survey report</a>"
         },
         {
-          "rule_id": "WCAG-2.4.7",
+          "rule_id": "WCAG-AI-2.1.2",
           "rule_name": "Focus Outline Suppressed",
           "severity": "Serious",
           "dom_selector": "head > style",
           "raw_html_snippet": "outline: none !important;",
-          "issue_explanation": "CSS suppresses default keyboard focus outlines (:focus { outline: none; }) without providing an accessible high-contrast replacement focus indicator. Sighted keyboard navigators cannot track active focus.",
-          "suggested_fix": "Ensure interactive elements retain a high-visibility focus ring, e.g. :focus-visible { outline: 3px solid #2563eb; }."
+          "issue_explanation": "CSS suppresses default keyboard focus outlines (:focus { outline: none; }) without providing a high-contrast replacement focus indicator. Sighted keyboard navigators lose track of active focus.",
+          "suggested_fix": "Ensure interactive elements retain a high-contrast focus ring, e.g. :focus-visible { outline: 3px solid #2563eb; }.",
+          "before_html": "a:focus, button:focus { outline: none !important; }",
+          "after_html": "a:focus-visible, button:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }"
+        },
+        {
+          "rule_id": "WCAG-AI-1.3.1L",
+          "rule_name": "Missing Primary <main> Landmark",
+          "severity": "Moderate",
+          "dom_selector": "article",
+          "raw_html_snippet": "<article> ... </article>",
+          "issue_explanation": "The document lacks a primary <main> landmark region. Assistive technologies use landmarks to allow users to jump directly to primary content, bypassing header navigation.",
+          "suggested_fix": "Wrap primary page content inside a semantic <main> tag or specify role='main'.",
+          "before_html": "<article> ... </article>",
+          "after_html": "<main>\n  <article> ... </article>\n</main>"
         }
       ],
       "status": "FAILED",
-      "timestamp": "2026-11-23T17:18:24.478237+00:00"
+      "timestamp": "2026-11-24T08:04:45.157500+00:00"
     },
     {
       "page_name": "05_accessible_reference.html",
@@ -282,7 +348,7 @@
       },
       "violations": [],
       "status": "PASSED",
-      "timestamp": "2026-11-23T17:18:24.482695+00:00"
+      "timestamp": "2026-11-24T08:04:46.095473+00:00"
     }
   ]
 }

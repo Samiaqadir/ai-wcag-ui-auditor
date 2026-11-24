@@ -903,8 +903,11 @@
           <div class="violation-selector">${escapeHtml(v.dom_selector)}</div>
           <div class="violation-desc">${v.issue_explanation}</div>
           <div class="violation-fix-box">
-            <div class="fix-code"><strong>Fix:</strong> ${escapeHtml(v.suggested_fix)}</div>
-            <button class="btn-copy" onclick="copyFix(this, '${escapeForAttr(v.suggested_fix)}')">📋 Copy</button>
+            <div class="fix-code">
+              <div style="margin-bottom: 0.35rem; font-size: 0.725rem; opacity: 0.85;"><strong>🔴 Before:</strong> <code>${escapeHtml(v.before_html || v.raw_html_snippet)}</code></div>
+              <div style="font-size: 0.75rem; color: var(--success); font-weight: 600;"><strong>🟢 After (Fix):</strong> <code>${escapeHtml(v.after_html || v.suggested_fix)}</code></div>
+            </div>
+            <button class="btn-copy" onclick="copyFix(this, '${escapeForAttr(v.after_html || v.suggested_fix)}')">📋 Copy Fix</button>
           </div>
         `;
         vContent.appendChild(card);

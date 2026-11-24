@@ -1,0 +1,435 @@
+{
+  "timestamp": "2026-11-24T08:04:48.049240+00:00",
+  "baseline_page": "01_ecommerce_checkout.html",
+  "modified_page": "01_ecommerce_checkout_modified.html",
+  "total_layout_shifts": 20,
+  "total_style_regressions": 0,
+  "total_structural_changes": 17,
+  "layout_shifts": [
+    {
+      "dom_selector": "#btn-submit-payment",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 766.56,
+        "width": 800.0,
+        "height": 48.19
+      },
+      "modified_box": {
+        "x": 355.0,
+        "y": 718.12,
+        "width": 544.0,
+        "height": 48.19
+      },
+      "delta_x": 115.0,
+      "delta_y": -48.44,
+      "delta_width": -256.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 115.0px, shifted up by 48.44px, width shrunk by 256.0px"
+    },
+    {
+      "dom_selector": "#cardholder-name",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 550.56,
+        "width": 800.0,
+        "height": 44.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 481.12,
+        "width": 640.0,
+        "height": 44.0
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -160.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 160.0px"
+    },
+    {
+      "dom_selector": "#cc-cvv",
+      "baseline_box": {
+        "x": 648.0,
+        "y": 678.56,
+        "width": 392.0,
+        "height": 44.0
+      },
+      "modified_box": {
+        "x": 648.0,
+        "y": 609.12,
+        "width": 312.0,
+        "height": 44.0
+      },
+      "delta_x": 0.0,
+      "delta_y": -69.44,
+      "delta_width": -80.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted up by 69.44px, width shrunk by 80.0px"
+    },
+    {
+      "dom_selector": "#cc-expiry",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 678.56,
+        "width": 392.0,
+        "height": 44.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 609.12,
+        "width": 312.0,
+        "height": 44.0
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -80.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 80.0px"
+    },
+    {
+      "dom_selector": "#cc-number",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 614.56,
+        "width": 800.0,
+        "height": 44.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 545.12,
+        "width": 640.0,
+        "height": 44.0
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -160.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 160.0px"
+    },
+    {
+      "dom_selector": "#order-summary-title",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 149.88,
+        "width": 800.0,
+        "height": 32.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 212.88,
+        "width": 640.0,
+        "height": 32.0
+      },
+      "delta_x": 80.0,
+      "delta_y": 63.0,
+      "delta_width": -160.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted down by 63.0px, width shrunk by 160.0px"
+    },
+    {
+      "dom_selector": "#payment-form",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 550.56,
+        "width": 800.0,
+        "height": 264.19
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 481.12,
+        "width": 640.0,
+        "height": 323.19
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -160.0,
+      "delta_height": 59.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 160.0px, height expanded by 59.0px"
+    },
+    {
+      "dom_selector": "#payment-title",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 498.66,
+        "width": 800.0,
+        "height": 32.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 429.22,
+        "width": 640.0,
+        "height": 32.0
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -160.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 160.0px"
+    },
+    {
+      "dom_selector": "body",
+      "baseline_box": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 898.75
+      },
+      "modified_box": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 873.91
+      },
+      "delta_x": 0.0,
+      "delta_y": 0.0,
+      "delta_width": 0.0,
+      "delta_height": -24.84,
+      "shift_description": "Layout Shift: height shrunk by 24.84px"
+    },
+    {
+      "dom_selector": "html",
+      "baseline_box": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 898.75
+      },
+      "modified_box": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 873.91
+      },
+      "delta_x": 0.0,
+      "delta_y": 0.0,
+      "delta_width": 0.0,
+      "delta_height": -24.84,
+      "shift_description": "Layout Shift: height shrunk by 24.84px"
+    },
+    {
+      "dom_selector": "main.checkout-container",
+      "baseline_box": {
+        "x": 208.0,
+        "y": 32.0,
+        "width": 864.0,
+        "height": 834.75
+      },
+      "modified_box": {
+        "x": 296.0,
+        "y": 32.0,
+        "width": 688.0,
+        "height": 809.91
+      },
+      "delta_x": 88.0,
+      "delta_y": 0.0,
+      "delta_width": -176.0,
+      "delta_height": -24.84,
+      "shift_description": "Layout Shift: shifted right by 88.0px, width shrunk by 176.0px, height shrunk by 24.84px"
+    },
+    {
+      "dom_selector": "main.checkout-container > h1",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 85.44,
+        "width": 800.0,
+        "height": 43.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 77.44,
+        "width": 640.0,
+        "height": 43.0
+      },
+      "delta_x": 80.0,
+      "delta_y": -8.0,
+      "delta_width": -160.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 8.0px, width shrunk by 160.0px"
+    },
+    {
+      "dom_selector": "main.checkout-container > section:nth-of-type(1)",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 149.88,
+        "width": 800.0,
+        "height": 316.78
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 212.88,
+        "width": 640.0,
+        "height": 184.34
+      },
+      "delta_x": 80.0,
+      "delta_y": 63.0,
+      "delta_width": -160.0,
+      "delta_height": -132.44,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted down by 63.0px, width shrunk by 160.0px, height shrunk by 132.44px"
+    },
+    {
+      "dom_selector": "main.checkout-container > section:nth-of-type(2)",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 498.66,
+        "width": 800.0,
+        "height": 316.09
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 429.22,
+        "width": 640.0,
+        "height": 375.09
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -160.0,
+      "delta_height": 59.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 160.0px, height expanded by 59.0px"
+    },
+    {
+      "dom_selector": "main.checkout-container > section:nth-of-type(2) > form > div.form-group:nth-of-type(1)",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 550.56,
+        "width": 800.0,
+        "height": 44.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 481.12,
+        "width": 640.0,
+        "height": 44.0
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -160.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 160.0px"
+    },
+    {
+      "dom_selector": "main.checkout-container > section:nth-of-type(2) > form > div.form-group:nth-of-type(2)",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 614.56,
+        "width": 800.0,
+        "height": 44.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 545.12,
+        "width": 640.0,
+        "height": 44.0
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -160.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 160.0px"
+    },
+    {
+      "dom_selector": "main.checkout-container > section:nth-of-type(2) > form > div.form-group:nth-of-type(4)",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 766.56,
+        "width": 800.0,
+        "height": 48.19
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 673.12,
+        "width": 640.0,
+        "height": 93.19
+      },
+      "delta_x": 80.0,
+      "delta_y": -93.44,
+      "delta_width": -160.0,
+      "delta_height": 45.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 93.44px, width shrunk by 160.0px, height expanded by 45.0px"
+    },
+    {
+      "dom_selector": "main.checkout-container > section:nth-of-type(2) > form > div:nth-of-type(3)",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 678.56,
+        "width": 800.0,
+        "height": 64.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 609.12,
+        "width": 640.0,
+        "height": 64.0
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -160.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 160.0px"
+    },
+    {
+      "dom_selector": "main.checkout-container > section:nth-of-type(2) > form > div:nth-of-type(3) > div.form-group:nth-of-type(1)",
+      "baseline_box": {
+        "x": 240.0,
+        "y": 678.56,
+        "width": 392.0,
+        "height": 44.0
+      },
+      "modified_box": {
+        "x": 320.0,
+        "y": 609.12,
+        "width": 312.0,
+        "height": 44.0
+      },
+      "delta_x": 80.0,
+      "delta_y": -69.44,
+      "delta_width": -80.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted right by 80.0px, shifted up by 69.44px, width shrunk by 80.0px"
+    },
+    {
+      "dom_selector": "main.checkout-container > section:nth-of-type(2) > form > div:nth-of-type(3) > div.form-group:nth-of-type(2)",
+      "baseline_box": {
+        "x": 648.0,
+        "y": 678.56,
+        "width": 392.0,
+        "height": 44.0
+      },
+      "modified_box": {
+        "x": 648.0,
+        "y": 609.12,
+        "width": 312.0,
+        "height": 44.0
+      },
+      "delta_x": 0.0,
+      "delta_y": -69.44,
+      "delta_width": -80.0,
+      "delta_height": 0.0,
+      "shift_description": "Layout Shift: shifted up by 69.44px, width shrunk by 80.0px"
+    }
+  ],
+  "style_regressions": [],
+  "structural_changes": {
+    "added_elements": [
+      "#checkout-disclaimer",
+      "#promo-banner",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row > div",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row > div > h3",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row > div > p",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row > img.product-img"
+    ],
+    "removed_elements": [
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(1)",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(1) > div",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(1) > div > h3",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(1) > div > p",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(1) > img.product-img",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(2)",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(2) > div",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(2) > div > h3",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(2) > div > p",
+      "main.checkout-container > section:nth-of-type(1) > div.product-row:nth-of-type(2) > img.product-img"
+    ]
+  },
+  "summary": "Regression Diff: 20 layout shifts, 0 style mutations, 7 added elements, 10 removed elements."
+}

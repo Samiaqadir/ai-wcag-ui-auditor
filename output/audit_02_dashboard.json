@@ -1,0 +1,70 @@
+{
+  "page_name": "02_saas_dashboard.html",
+  "file_path": "C:\\Users\\samia\\OneDrive\\Desktop\\Smj projects\\AI Accessibility (WCAG) & UI Regression Auditor\\test_pages\\02_saas_dashboard.html",
+  "total_violations": 5,
+  "violations_by_severity": {
+    "Critical": 2,
+    "Serious": 2,
+    "Moderate": 1,
+    "Minor": 0
+  },
+  "violations": [
+    {
+      "rule_id": "WCAG-1.4.3",
+      "rule_name": "Insufficient Color Contrast Ratio",
+      "severity": "Serious",
+      "dom_selector": "main.dashboard-content > div.card-grid > div.card:nth-of-type(1) > span",
+      "raw_html_snippet": "<span style=\"color: #16a34a;\">\u2191 Optimal performance</span>",
+      "issue_explanation": "Computed contrast ratio is 3.3:1, failing WCAG AA threshold of 4.5:1 (computed foreground 'rgb(22, 163, 74)' on background 'rgb(255, 255, 255)'). Users with low vision or color blindness cannot comfortably perceive this text.",
+      "suggested_fix": "Adjust text or background color to satisfy minimum 4.5:1 contrast ratio.",
+      "before_html": "<span style=\"color: #16a34a;\">\u2191 Optimal performance</span>",
+      "after_html": "<span style=\"color: #15803d; font-weight: 600;\">\u2191 Optimal performance</span>"
+    },
+    {
+      "rule_id": "WCAG-1.4.3",
+      "rule_name": "Insufficient Color Contrast Ratio",
+      "severity": "Serious",
+      "dom_selector": "#cluster-status-badge",
+      "raw_html_snippet": "<span class=\"status-badge-inactive\" id=\"cluster-status-badge\">Standby Mode</span>",
+      "issue_explanation": "Computed contrast ratio is 2.45:1, failing WCAG AA threshold of 4.5:1 (computed foreground 'rgb(148, 163, 184)' on background 'rgb(248, 250, 252)'). Users with low vision or color blindness cannot comfortably perceive this text.",
+      "suggested_fix": "Adjust text or background color to satisfy minimum 4.5:1 contrast ratio.",
+      "before_html": "<span class=\"status-badge-inactive\" id=\"cluster-status-badge\">Standby Mode</span>",
+      "after_html": "<span class=\"status-badge-inactive\" id=\"cluster-status-badge\" style=\"background-color: #e2e8f0; color: #1e293b; font-weight: 600;\">Standby Mode</span>"
+    },
+    {
+      "rule_id": "WCAG-1.3.1H",
+      "rule_name": "Heading Hierarchy Skip",
+      "severity": "Moderate",
+      "dom_selector": "main.dashboard-content > h4",
+      "raw_html_snippet": "<h4>Real-time Infrastructure Status</h4>",
+      "issue_explanation": "Heading structure jumps from <h1> directly to <h4>, skipping <h2>. Skipping heading levels creates a disjointed outline in screen reader navigation palettes.",
+      "suggested_fix": "Change <h4> to <h2> or restructure document sections.",
+      "before_html": "<h4>Real-time Infrastructure Status</h4>",
+      "after_html": "<h2>Real-time Infrastructure Status</h2>"
+    },
+    {
+      "rule_id": "WCAG-4.1.2",
+      "rule_name": "Button Missing Accessible Name",
+      "severity": "Critical",
+      "dom_selector": "#notifications-btn",
+      "raw_html_snippet": "<button class=\"icon-btn\" id=\"notifications-btn\"> ... </button>",
+      "issue_explanation": "The <button> contains no readable text, aria-label, or image alt attribute. Screen readers will announce an unlabelled button, preventing users from understanding its action.",
+      "suggested_fix": "Add aria-label=\"Action Name\" or include descriptive text.",
+      "before_html": "<button class=\"icon-btn\" id=\"notifications-btn\"> ... </button>",
+      "after_html": "<button class=\"icon-btn\" id=\"notifications-btn\" aria-label=\"View user notifications\"> ... </button>"
+    },
+    {
+      "rule_id": "WCAG-4.1.2",
+      "rule_name": "Button Missing Accessible Name",
+      "severity": "Critical",
+      "dom_selector": "#settings-btn",
+      "raw_html_snippet": "<button class=\"icon-btn\" id=\"settings-btn\" style=\"margin-left: 0.5rem;\"> ... </button>",
+      "issue_explanation": "The <button> contains no readable text, aria-label, or image alt attribute. Screen readers will announce an unlabelled button, preventing users from understanding its action.",
+      "suggested_fix": "Add aria-label=\"Action Name\" or include descriptive text.",
+      "before_html": "<button class=\"icon-btn\" id=\"settings-btn\" style=\"margin-left: 0.5rem;\"> ... </button>",
+      "after_html": "<button class=\"icon-btn\" id=\"settings-btn\" style=\"margin-left: 0.5rem;\" aria-label=\"Open system settings\"> ... </button>"
+    }
+  ],
+  "status": "FAILED",
+  "timestamp": "2026-11-24T08:04:43.350323+00:00"
+}
