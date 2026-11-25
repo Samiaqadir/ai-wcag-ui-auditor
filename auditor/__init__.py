@@ -1,11 +1,12 @@
 """
 AI Accessibility (WCAG 2.1 AA) & UI Regression Auditor Package.
-Day-2 Complete Inspection, Context-Aware LLM Remediation, and Layout Regression Diffing.
+Day-3 Complete Streamlit QA Dashboard, Triage Engine, and Multi-Format Exporter.
 """
 
 from auditor.models import (
     Violation,
     Severity,
+    TriageStatus,
     PageAuditResult,
     AuditSummaryReport,
     BoundingBox,
@@ -19,10 +20,12 @@ from auditor.parser import PlaywrightDOMInspector, PageInspectionResult, generat
 from auditor.rules import audit_page_file
 from auditor.llm_remediator import LLMRemediator
 from auditor.regression import compare_page_snapshots
+from auditor.exporter import export_to_html, export_to_markdown, export_to_csv
 
 __all__ = [
     "Violation",
     "Severity",
+    "TriageStatus",
     "PageAuditResult",
     "AuditSummaryReport",
     "BoundingBox",
@@ -40,4 +43,7 @@ __all__ = [
     "audit_page_file",
     "LLMRemediator",
     "compare_page_snapshots",
+    "export_to_html",
+    "export_to_markdown",
+    "export_to_csv",
 ]

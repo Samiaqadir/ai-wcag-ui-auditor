@@ -1,744 +1,480 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WCAG 2.1 AA Executive QA Audit Report - 01_ecommerce_checkout.html</title>
-    <style>
-        :root {
-            --bg-canvas: #0f172a;
-            --bg-card: #1e293b;
-            --bg-card-subtle: #182234;
-            --border-card: #334155;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --text-faint: #64748b;
-            --accent-primary: #3b82f6;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        }
-        @media print {
-            body { background: #ffffff !important; color: #0f172a !important; }
-            .issue-card { break-inside: avoid; border: 1px solid #cbd5e1 !important; background: #ffffff !important; color: #0f172a !important; }
-            .code-pane { background: #f8fafc !important; color: #0f172a !important; }
-            .no-print { display: none !important; }
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: var(--bg-canvas);
-            color: var(--text-main);
-            font-family: var(--font-family);
-            line-height: 1.6;
-            padding: 32px 24px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        /* Header */
-        .report-header {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1px solid var(--border-card);
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .header-left h1 {
-            font-size: 26px;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 6px;
-            letter-spacing: -0.5px;
-        }
-        .header-meta {
-            font-size: 13px;
-            color: var(--text-muted);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .header-meta span strong {
-            color: #e2e8f0;
-        }
-        .score-box {
-            background: rgba(15, 23, 42, 0.8);
-            border: 2px solid #ef4444;
-            border-radius: 14px;
-            padding: 16px 24px;
-            text-align: center;
-            min-width: 170px;
-        }
-        .score-val {
-            font-size: 38px;
-            font-weight: 900;
-            color: #ef4444;
-            line-height: 1;
-        }
-        .score-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-        .score-grade {
-            display: inline-block;
-            margin-top: 6px;
-            padding: 2px 10px;
-            border-radius: 9999px;
-            font-size: 11px;
-            font-weight: 700;
-            background: #ef4444;
-            color: #ffffff;
-        }
-        /* KPI Cards */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-        .kpi-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-        }
-        .kpi-title {
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-        }
-        .kpi-value {
-            font-size: 30px;
-            font-weight: 800;
-            color: #ffffff;
-        }
-        .kpi-subtext {
-            font-size: 12px;
-            color: var(--text-faint);
-            margin-top: 4px;
-        }
-        /* Section Title */
-        .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #f1f5f9;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        /* Issue Card */
-        .issue-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            transition: transform 0.15s ease;
-        }
-        .issue-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 14px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .issue-title-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .issue-index {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-faint);
-        }
-        .rule-id {
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 6px;
-            padding: 3px 8px;
-            font-size: 12px;
-            font-weight: 700;
-            font-family: var(--font-mono);
-        }
-        .rule-name {
-            font-size: 17px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-        .badge-group {
-            display: flex;
-            gap: 8px;
-        }
-        .badge {
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid transparent;
-        }
-        .issue-meta {
-            margin-bottom: 14px;
-            font-size: 13px;
-        }
-        .meta-label {
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-right: 6px;
-        }
-        .meta-selector {
-            font-family: var(--font-mono);
-            background: #0f172a;
-            border: 1px solid #334155;
-            padding: 3px 8px;
-            border-radius: 6px;
-            color: #38bdf8;
-            font-size: 12px;
-            word-break: break-all;
-        }
-        .issue-body {
-            font-size: 14px;
-            color: #cbd5e1;
-            margin-bottom: 16px;
-        }
-        .issue-explanation {
-            margin-bottom: 8px;
-        }
-        .issue-fix {
-            color: #94a3b8;
-        }
-        /* Reviewer QA Note */
-        .reviewer-notes-box {
-            background: rgba(234, 179, 8, 0.1);
-            border-left: 4px solid #eab308;
-            border-radius: 0 8px 8px 0;
-            padding: 10px 16px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: #fef08a;
-        }
-        .reviewer-label {
-            font-weight: 700;
-            margin-right: 6px;
-        }
-        /* Code Diff Viewer */
-        .code-diff-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 14px;
-        }
-        @media (max-width: 800px) {
-            .code-diff-container { grid-template-columns: 1fr; }
-        }
-        .code-pane {
-            background: #090d16;
-            border: 1px solid #1e293b;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .pane-header {
-            background: #111827;
-            padding: 8px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid #1f2937;
-        }
-        .before-pane .pane-title { color: #f87171; }
-        .after-pane .pane-title { color: #4ade80; }
-        .code-pane pre {
-            margin: 0;
-            padding: 14px;
-            overflow-x: auto;
-            font-family: var(--font-mono);
-            font-size: 12px;
-            line-height: 1.5;
-            color: #e2e8f0;
-        }
-        .footer {
-            margin-top: 48px;
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-faint);
-            border-top: 1px solid var(--border-card);
-            padding-top: 24px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WCAG 2.1 AA Executive QA Audit Report - 01_ecommerce_checkout.html</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #4f46e5;
+      --critical: #dc2626;
+      --serious: #d97706;
+      --moderate: #0284c7;
+      --success: #16a34a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2.5rem 1.5rem;
+    }
+    .report-container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    .header-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+    .header-left h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .meta-line {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .score-badge {
+      background: #f1f5f9;
+      border: 3px solid #dc2626;
+      border-radius: 50%;
+      width: 110px;
+      height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .score-val {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #dc2626;
+      line-height: 1;
+    }
+    .score-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .kpi-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+    .kpi-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+    .findings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    .findings-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+    .violation-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      page-break-inside: avoid;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .rule-tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-critical { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .badge-serious { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+    .badge-moderate { background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; }
+    .badge-minor { background: #f8fafc; color: #64748b; border: 1px solid #cbd5e1; }
+    
+    .badge-triage-confirmed { background: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+    .badge-triage-false { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .badge-triage-wontfix { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .badge-triage-pending { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .selector-box {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.785rem;
+      background: #f1f5f9;
+      padding: 0.4rem 0.65rem;
+      border-radius: 6px;
+      color: #475569;
+      margin-bottom: 0.75rem;
+      word-break: break-all;
+    }
+    .desc-text {
+      font-size: 0.9rem;
+      color: #334155;
+      margin-bottom: 1rem;
+    }
+    .notes-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.85rem;
+      color: #1e293b;
+    }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .diff-col h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    .diff-code {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 0.85rem;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.785rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 70px;
+    }
+    .diff-code.before { border-left: 4px solid var(--critical); }
+    .diff-code.after { border-left: 4px solid var(--success); }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .header-card, .violation-card { box-shadow: none; border-color: #cbd5e1; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="report-header">
-            <div class="header-left">
-                <h1>🛡️ WCAG 2.1 AA Executive QA Accessibility Report</h1>
-                <div class="header-meta">
-                    <span><strong>Audited Target:</strong> 01_ecommerce_checkout.html</span>
-                    <span><strong>Generated:</strong> 2026-11-25 10:03:26 UTC</span>
-                    <span><strong>Standard:</strong> WCAG 2.1 Level AA</span>
-                    <span><strong>Auditor Suite:</strong> Day-3 Streamlit QA Edition</span>
-                </div>
-            </div>
-            <div class="score-box">
-                <div class="score-val">17.0%</div>
-                <div class="score-label">WCAG Compliance Score</div>
-                <div class="score-grade">Grade F (Non-Compliant)</div>
-            </div>
-        </header>
-
-        <!-- KPI Grid -->
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <div class="kpi-title">Total Detected Findings</div>
-                <div class="kpi-value">7</div>
-                <div class="kpi-subtext">Automated 10-rule inspection</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-title">Confirmed QA Defects</div>
-                <div class="kpi-value" style="color: #ef4444;">6</div>
-                <div class="kpi-subtext">Triaged & verified as real barriers</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-title">Critical & Serious Blockers</div>
-                <div class="kpi-value" style="color: #f97316;">6</div>
-                <div class="kpi-subtext">Active screen-reader blockers</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-title">False Positives Filtered</div>
-                <div class="kpi-value" style="color: #10b981;">1</div>
-                <div class="kpi-subtext">Excluded from compliance deduction</div>
-            </div>
+  <div class="report-container">
+    <header class="header-card">
+      <div class="header-left">
+        <h1>WCAG 2.1 AA Executive QA Audit Report - 01_ecommerce_checkout.html</h1>
+        <div class="meta-line">
+          <strong>Audited Page:</strong> 01_ecommerce_checkout.html &bull; 
+          <strong>Date:</strong> 2026-11-25T10:11:45.017764+00:00 &bull;
+          <strong>Status:</strong> FAILED
         </div>
+      </div>
+      <div class="score-badge">
+        <div class="score-val">15.0%</div>
+        <div class="score-label">Compliance</div>
+      </div>
+    </header>
 
-        
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num">7</div>
+        <div class="kpi-label">Total Findings</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num" style="color: #dc2626;">6</div>
+        <div class="kpi-label">Confirmed Defects</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num" style="color: #16a34a;">1</div>
+        <div class="kpi-label">False Positives</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num" style="color: #4f46e5;">0</div>
+        <div class="kpi-label">Pending / Won't Fix</div>
+      </div>
+    </section>
 
-        <!-- Issues List -->
-        <section>
-            <h2 class="section-title">🔍 Detailed Accessibility Findings & Remediated Patches</h2>
-            
-        <div class="issue-card" id="issue-1">
-            <div class="issue-card-header">
-                <div class="issue-title-group">
-                    <span class="issue-index">#1</span>
-                    <span class="rule-id">WCAG-1.1.1</span>
-                    <h3 class="rule-name">Missing Image Alternative Text</h3>
-                </div>
-                <div class="badge-group">
-                    <span class="badge badge-sev" style="background:#fee2e2; color:#991b1b; border-color:#ef4444;">
-                        Critical
-                    </span>
-                    <span class="badge badge-triage" style="background:#d1fae5; color:#065f46; border-color:#10b981;">
-                        ● False Positive
-                    </span>
-                </div>
-            </div>
+    <section>
+      <div class="findings-header">
+        <h2 class="findings-title">Detailed WCAG 2.1 AA Findings & Triage Log</h2>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">7 issues documented</span>
+      </div>
 
-            <div class="issue-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Target DOM Selector:</span>
-                    <code class="meta-selector">main.checkout-container &gt; section:nth-of-type(1) &gt; div.product-row:nth-of-type(1) &gt; img.product-img</code>
-                </div>
-            </div>
-
-            <div class="issue-body">
-                <p class="issue-explanation"><strong>Accessibility Barrier:</strong> The &lt;img&gt; element is completely missing an &#x27;alt&#x27; attribute. Screen readers cannot describe the visual content to users with visual impairments and may announce the raw image URL.</p>
-                <p class="issue-fix"><strong>Remediation Strategy:</strong> Add a descriptive alt attribute, e.g. alt=&quot;Description of image&quot;, or alt=&quot;&quot; if decorative.</p>
-            </div>
-
-            
-            <div class="reviewer-notes-box">
-                <span class="reviewer-label">💬 Reviewer QA Triage Note:</span>
-                <span class="reviewer-text">QA Verified: Decorative icon element; verified with screen reader as non-blocking in checkout flow.</span>
-            </div>
-            
-
-            <div class="code-diff-container">
-                <div class="code-pane before-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator red-dot"></span>
-                        <span class="pane-title">🔴 Original Non-Compliant HTML</span>
-                    </div>
-                    <pre><code>&lt;img class=&quot;product-img&quot; src=&quot;data:image/svg+xml;utf8,&amp;lt;svg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;80&#x27; height=&#x27;80&#x27; fill=&#x27;%236366f1&#x27;&amp;gt;&amp;lt;rect width=&#x27;100%&#x27; height=&#x27;100%&#x27;/&amp;gt;&amp;lt;/svg&amp;gt;&quot;/&gt; ... &lt;/img&gt;</code></pre>
-                </div>
-                <div class="code-pane after-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator green-dot"></span>
-                        <span class="pane-title">🟢 Recommended Accessible Patch</span>
-                    </div>
-                    <pre><code>&lt;img class=&quot;product-img&quot; src=&quot;data:image/svg+xml;utf8,&amp;lt;svg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;80&#x27; height=&#x27;80&#x27; fill=&#x27;%236366f1&#x27;&amp;gt;&amp;lt;rect width=&#x27;100%&#x27; height=&#x27;100%&#x27;/&amp;gt;&amp;lt;/svg&amp;gt;&quot; alt=&quot;Ultra-Light Wireless Noise Cancelling Headphones&quot;&gt; ... &lt;/img&gt;</code></pre>
-                </div>
-            </div>
+      <article class="violation-card">
+        <div class="card-top">
+          <span class="rule-tag">#1 &bull; WCAG-1.1.1</span>
+          <div>
+            <span class="badge badge-critical">Critical</span>
+            <span class="badge badge-triage-confirmed" style="margin-left: 0.4rem;">Confirmed Defect</span>
+          </div>
         </div>
+        <h3 class="card-title">Missing Image Alternative Text</h3>
+        <div class="selector-box">Selector: main.checkout-container &gt; section:nth-of-type(1) &gt; div.product-row:nth-of-type(1) &gt; img.product-img</div>
+        <p class="desc-text">The &lt;img&gt; element is completely missing an &#x27;alt&#x27; attribute. Screen readers cannot describe the visual content to users with visual impairments and may announce the raw image URL.</p>
         
-
-        <div class="issue-card" id="issue-2">
-            <div class="issue-card-header">
-                <div class="issue-title-group">
-                    <span class="issue-index">#2</span>
-                    <span class="rule-id">WCAG-1.1.1</span>
-                    <h3 class="rule-name">Missing Image Alternative Text</h3>
-                </div>
-                <div class="badge-group">
-                    <span class="badge badge-sev" style="background:#fee2e2; color:#991b1b; border-color:#ef4444;">
-                        Critical
-                    </span>
-                    <span class="badge badge-triage" style="background:#fee2e2; color:#991b1b; border-color:#dc2626;">
-                        ● Confirmed Defect
-                    </span>
-                </div>
-            </div>
-
-            <div class="issue-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Target DOM Selector:</span>
-                    <code class="meta-selector">main.checkout-container &gt; section:nth-of-type(1) &gt; div.product-row:nth-of-type(2) &gt; img.product-img</code>
-                </div>
-            </div>
-
-            <div class="issue-body">
-                <p class="issue-explanation"><strong>Accessibility Barrier:</strong> The &lt;img&gt; element is completely missing an &#x27;alt&#x27; attribute. Screen readers cannot describe the visual content to users with visual impairments and may announce the raw image URL.</p>
-                <p class="issue-fix"><strong>Remediation Strategy:</strong> Add a descriptive alt attribute, e.g. alt=&quot;Description of image&quot;, or alt=&quot;&quot; if decorative.</p>
-            </div>
-
-            
-            <div class="reviewer-notes-box">
-                <span class="reviewer-label">💬 Reviewer QA Triage Note:</span>
-                <span class="reviewer-text">Confirmed Defect: Critical screen reader or contrast barrier, ticket filed for front-end team.</span>
+        
+            <div class="notes-box">
+              <strong>QA Reviewer Note:</strong> Confirmed Defect: Meets WCAG AA failure criteria; ticket filed in sprint backlog for frontend remediation.
             </div>
             
 
-            <div class="code-diff-container">
-                <div class="code-pane before-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator red-dot"></span>
-                        <span class="pane-title">🔴 Original Non-Compliant HTML</span>
-                    </div>
-                    <pre><code>&lt;img class=&quot;product-img&quot; src=&quot;data:image/svg+xml;utf8,&amp;lt;svg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;80&#x27; height=&#x27;80&#x27; fill=&#x27;%2310b981&#x27;&amp;gt;&amp;lt;rect width=&#x27;100%&#x27; height=&#x27;100%&#x27;/&amp;gt;&amp;lt;/svg&amp;gt;&quot;/&gt; ... &lt;/img&gt;</code></pre>
-                </div>
-                <div class="code-pane after-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator green-dot"></span>
-                        <span class="pane-title">🟢 Recommended Accessible Patch</span>
-                    </div>
-                    <pre><code>&lt;img class=&quot;product-img&quot; src=&quot;data:image/svg+xml;utf8,&amp;lt;svg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;80&#x27; height=&#x27;80&#x27; fill=&#x27;%2310b981&#x27;&amp;gt;&amp;lt;rect width=&#x27;100%&#x27; height=&#x27;100%&#x27;/&amp;gt;&amp;lt;/svg&amp;gt;&quot; alt=&quot;Braided Fast-Charging USB-C Cable (2m)&quot;&gt; ... &lt;/img&gt;</code></pre>
-                </div>
-            </div>
+        <div class="diff-grid">
+          <div class="diff-col">
+            <h4 style="color: var(--critical);">🔴 Non-Compliant HTML (Before)</h4>
+            <div class="diff-code before">&lt;img class=&quot;product-img&quot; src=&quot;data:image/svg+xml;utf8,&amp;lt;svg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;80&#x27; height=&#x27;80&#x27; fill=&#x27;%236366f1&#x27;&amp;gt;&amp;lt;rect width=&#x27;100%&#x27; height=&#x27;100%&#x27;/&amp;gt;&amp;lt;/svg&amp;gt;&quot;/&gt; ... &lt;/img&gt;</div>
+          </div>
+          <div class="diff-col">
+            <h4 style="color: var(--success);">🟢 Accessible Patch (After)</h4>
+            <div class="diff-code after">&lt;img class=&quot;product-img&quot; src=&quot;data:image/svg+xml;utf8,&amp;lt;svg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;80&#x27; height=&#x27;80&#x27; fill=&#x27;%236366f1&#x27;&amp;gt;&amp;lt;rect width=&#x27;100%&#x27; height=&#x27;100%&#x27;/&amp;gt;&amp;lt;/svg&amp;gt;&quot; alt=&quot;Ultra-Light Wireless Noise Cancelling Headphones&quot;&gt; ... &lt;/img&gt;</div>
+          </div>
         </div>
-        
+      </article>
 
-        <div class="issue-card" id="issue-3">
-            <div class="issue-card-header">
-                <div class="issue-title-group">
-                    <span class="issue-index">#3</span>
-                    <span class="rule-id">WCAG-1.3.1</span>
-                    <h3 class="rule-name">Missing Form Input Label</h3>
-                </div>
-                <div class="badge-group">
-                    <span class="badge badge-sev" style="background:#fee2e2; color:#991b1b; border-color:#ef4444;">
-                        Critical
-                    </span>
-                    <span class="badge badge-triage" style="background:#fee2e2; color:#991b1b; border-color:#dc2626;">
-                        ● Confirmed Defect
-                    </span>
-                </div>
-            </div>
-
-            <div class="issue-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Target DOM Selector:</span>
-                    <code class="meta-selector">#cardholder-name</code>
-                </div>
-            </div>
-
-            <div class="issue-body">
-                <p class="issue-explanation"><strong>Accessibility Barrier:</strong> Form control &lt;input&gt; lacks an accessible programmatic label (&lt;label for=&#x27;...&#x27;&gt;, wrapping label, or aria-label). Relying solely on placeholder=&#x27;Cardholder Full Name&#x27; violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.</p>
-                <p class="issue-fix"><strong>Remediation Strategy:</strong> &lt;label for=&quot;cardholder-name&quot;&gt;Field Label&lt;/label&gt; or aria-label=&quot;Field Label&quot;</p>
-            </div>
-
-            
-            <div class="reviewer-notes-box">
-                <span class="reviewer-label">💬 Reviewer QA Triage Note:</span>
-                <span class="reviewer-text">Confirmed Defect: Critical screen reader or contrast barrier, ticket filed for front-end team.</span>
-            </div>
-            
-
-            <div class="code-diff-container">
-                <div class="code-pane before-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator red-dot"></span>
-                        <span class="pane-title">🔴 Original Non-Compliant HTML</span>
-                    </div>
-                    <pre><code>&lt;input class=&quot;form-control&quot; id=&quot;cardholder-name&quot; placeholder=&quot;Cardholder Full Name&quot; type=&quot;text&quot;/&gt;</code></pre>
-                </div>
-                <div class="code-pane after-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator green-dot"></span>
-                        <span class="pane-title">🟢 Recommended Accessible Patch</span>
-                    </div>
-                    <pre><code>&lt;label for=&quot;cardholder-name&quot; class=&quot;form-label&quot;&gt;Cardholder Full Name&lt;/label&gt;
-&lt;input class=&quot;form-control&quot; id=&quot;cardholder-name&quot; placeholder=&quot;Cardholder Full Name&quot; type=&quot;text&quot;/&gt;</code></pre>
-                </div>
-            </div>
+      <article class="violation-card">
+        <div class="card-top">
+          <span class="rule-tag">#2 &bull; WCAG-1.1.1</span>
+          <div>
+            <span class="badge badge-critical">Critical</span>
+            <span class="badge badge-triage-false" style="margin-left: 0.4rem;">False Positive</span>
+          </div>
         </div>
+        <h3 class="card-title">Missing Image Alternative Text</h3>
+        <div class="selector-box">Selector: main.checkout-container &gt; section:nth-of-type(1) &gt; div.product-row:nth-of-type(2) &gt; img.product-img</div>
+        <p class="desc-text">The &lt;img&gt; element is completely missing an &#x27;alt&#x27; attribute. Screen readers cannot describe the visual content to users with visual impairments and may announce the raw image URL.</p>
         
-
-        <div class="issue-card" id="issue-4">
-            <div class="issue-card-header">
-                <div class="issue-title-group">
-                    <span class="issue-index">#4</span>
-                    <span class="rule-id">WCAG-1.3.1</span>
-                    <h3 class="rule-name">Missing Form Input Label</h3>
-                </div>
-                <div class="badge-group">
-                    <span class="badge badge-sev" style="background:#fee2e2; color:#991b1b; border-color:#ef4444;">
-                        Critical
-                    </span>
-                    <span class="badge badge-triage" style="background:#fee2e2; color:#991b1b; border-color:#dc2626;">
-                        ● Confirmed Defect
-                    </span>
-                </div>
-            </div>
-
-            <div class="issue-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Target DOM Selector:</span>
-                    <code class="meta-selector">#cc-number</code>
-                </div>
-            </div>
-
-            <div class="issue-body">
-                <p class="issue-explanation"><strong>Accessibility Barrier:</strong> Form control &lt;input&gt; lacks an accessible programmatic label (&lt;label for=&#x27;...&#x27;&gt;, wrapping label, or aria-label). Relying solely on placeholder=&#x27;Credit Card Number (16 digits)&#x27; violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.</p>
-                <p class="issue-fix"><strong>Remediation Strategy:</strong> &lt;label for=&quot;cc-number&quot;&gt;Field Label&lt;/label&gt; or aria-label=&quot;Field Label&quot;</p>
-            </div>
-
-            
-            <div class="reviewer-notes-box">
-                <span class="reviewer-label">💬 Reviewer QA Triage Note:</span>
-                <span class="reviewer-text">Confirmed Defect: Critical screen reader or contrast barrier, ticket filed for front-end team.</span>
+        
+            <div class="notes-box">
+              <strong>QA Reviewer Note:</strong> Verified: Secondary decorative thumbnail; verified with NVDA screen reader that product title in heading h3 adequately describes item.
             </div>
             
 
-            <div class="code-diff-container">
-                <div class="code-pane before-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator red-dot"></span>
-                        <span class="pane-title">🔴 Original Non-Compliant HTML</span>
-                    </div>
-                    <pre><code>&lt;input class=&quot;form-control&quot; id=&quot;cc-number&quot; placeholder=&quot;Credit Card Number (16 digits)&quot; type=&quot;text&quot;/&gt;</code></pre>
-                </div>
-                <div class="code-pane after-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator green-dot"></span>
-                        <span class="pane-title">🟢 Recommended Accessible Patch</span>
-                    </div>
-                    <pre><code>&lt;label for=&quot;cc-number&quot; class=&quot;form-label&quot;&gt;Credit Card Number (16 digits)&lt;/label&gt;
-&lt;input class=&quot;form-control&quot; id=&quot;cc-number&quot; placeholder=&quot;Credit Card Number (16 digits)&quot; type=&quot;text&quot;/&gt;</code></pre>
-                </div>
-            </div>
+        <div class="diff-grid">
+          <div class="diff-col">
+            <h4 style="color: var(--critical);">🔴 Non-Compliant HTML (Before)</h4>
+            <div class="diff-code before">&lt;img class=&quot;product-img&quot; src=&quot;data:image/svg+xml;utf8,&amp;lt;svg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;80&#x27; height=&#x27;80&#x27; fill=&#x27;%2310b981&#x27;&amp;gt;&amp;lt;rect width=&#x27;100%&#x27; height=&#x27;100%&#x27;/&amp;gt;&amp;lt;/svg&amp;gt;&quot;/&gt; ... &lt;/img&gt;</div>
+          </div>
+          <div class="diff-col">
+            <h4 style="color: var(--success);">🟢 Accessible Patch (After)</h4>
+            <div class="diff-code after">&lt;img class=&quot;product-img&quot; src=&quot;data:image/svg+xml;utf8,&amp;lt;svg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;80&#x27; height=&#x27;80&#x27; fill=&#x27;%2310b981&#x27;&amp;gt;&amp;lt;rect width=&#x27;100%&#x27; height=&#x27;100%&#x27;/&amp;gt;&amp;lt;/svg&amp;gt;&quot; alt=&quot;Braided Fast-Charging USB-C Cable (2m)&quot;&gt; ... &lt;/img&gt;</div>
+          </div>
         </div>
-        
+      </article>
 
-        <div class="issue-card" id="issue-5">
-            <div class="issue-card-header">
-                <div class="issue-title-group">
-                    <span class="issue-index">#5</span>
-                    <span class="rule-id">WCAG-1.3.1</span>
-                    <h3 class="rule-name">Missing Form Input Label</h3>
-                </div>
-                <div class="badge-group">
-                    <span class="badge badge-sev" style="background:#fee2e2; color:#991b1b; border-color:#ef4444;">
-                        Critical
-                    </span>
-                    <span class="badge badge-triage" style="background:#fee2e2; color:#991b1b; border-color:#dc2626;">
-                        ● Confirmed Defect
-                    </span>
-                </div>
-            </div>
-
-            <div class="issue-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Target DOM Selector:</span>
-                    <code class="meta-selector">#cc-expiry</code>
-                </div>
-            </div>
-
-            <div class="issue-body">
-                <p class="issue-explanation"><strong>Accessibility Barrier:</strong> Form control &lt;input&gt; lacks an accessible programmatic label (&lt;label for=&#x27;...&#x27;&gt;, wrapping label, or aria-label). Relying solely on placeholder=&#x27;MM/YY&#x27; violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.</p>
-                <p class="issue-fix"><strong>Remediation Strategy:</strong> &lt;label for=&quot;cc-expiry&quot;&gt;Field Label&lt;/label&gt; or aria-label=&quot;Field Label&quot;</p>
-            </div>
-
-            
-            <div class="reviewer-notes-box">
-                <span class="reviewer-label">💬 Reviewer QA Triage Note:</span>
-                <span class="reviewer-text">Confirmed Defect: Critical screen reader or contrast barrier, ticket filed for front-end team.</span>
-            </div>
-            
-
-            <div class="code-diff-container">
-                <div class="code-pane before-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator red-dot"></span>
-                        <span class="pane-title">🔴 Original Non-Compliant HTML</span>
-                    </div>
-                    <pre><code>&lt;input class=&quot;form-control&quot; id=&quot;cc-expiry&quot; placeholder=&quot;MM/YY&quot; type=&quot;text&quot;/&gt;</code></pre>
-                </div>
-                <div class="code-pane after-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator green-dot"></span>
-                        <span class="pane-title">🟢 Recommended Accessible Patch</span>
-                    </div>
-                    <pre><code>&lt;label for=&quot;cc-expiry&quot; class=&quot;form-label&quot;&gt;MM/YY&lt;/label&gt;
-&lt;input class=&quot;form-control&quot; id=&quot;cc-expiry&quot; placeholder=&quot;MM/YY&quot; type=&quot;text&quot;/&gt;</code></pre>
-                </div>
-            </div>
+      <article class="violation-card">
+        <div class="card-top">
+          <span class="rule-tag">#3 &bull; WCAG-1.3.1</span>
+          <div>
+            <span class="badge badge-critical">Critical</span>
+            <span class="badge badge-triage-confirmed" style="margin-left: 0.4rem;">Confirmed Defect</span>
+          </div>
         </div>
+        <h3 class="card-title">Missing Form Input Label</h3>
+        <div class="selector-box">Selector: #cardholder-name</div>
+        <p class="desc-text">Form control &lt;input&gt; lacks an accessible programmatic label (&lt;label for=&#x27;...&#x27;&gt;, wrapping label, or aria-label). Relying solely on placeholder=&#x27;Cardholder Full Name&#x27; violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.</p>
         
-
-        <div class="issue-card" id="issue-6">
-            <div class="issue-card-header">
-                <div class="issue-title-group">
-                    <span class="issue-index">#6</span>
-                    <span class="rule-id">WCAG-1.3.1</span>
-                    <h3 class="rule-name">Missing Form Input Label</h3>
-                </div>
-                <div class="badge-group">
-                    <span class="badge badge-sev" style="background:#fee2e2; color:#991b1b; border-color:#ef4444;">
-                        Critical
-                    </span>
-                    <span class="badge badge-triage" style="background:#fee2e2; color:#991b1b; border-color:#dc2626;">
-                        ● Confirmed Defect
-                    </span>
-                </div>
-            </div>
-
-            <div class="issue-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Target DOM Selector:</span>
-                    <code class="meta-selector">#cc-cvv</code>
-                </div>
-            </div>
-
-            <div class="issue-body">
-                <p class="issue-explanation"><strong>Accessibility Barrier:</strong> Form control &lt;input&gt; lacks an accessible programmatic label (&lt;label for=&#x27;...&#x27;&gt;, wrapping label, or aria-label). Relying solely on placeholder=&#x27;CVV&#x27; violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.</p>
-                <p class="issue-fix"><strong>Remediation Strategy:</strong> &lt;label for=&quot;cc-cvv&quot;&gt;Field Label&lt;/label&gt; or aria-label=&quot;Field Label&quot;</p>
-            </div>
-
-            
-            <div class="reviewer-notes-box">
-                <span class="reviewer-label">💬 Reviewer QA Triage Note:</span>
-                <span class="reviewer-text">Confirmed Defect: Critical screen reader or contrast barrier, ticket filed for front-end team.</span>
+        
+            <div class="notes-box">
+              <strong>QA Reviewer Note:</strong> Confirmed Defect: Meets WCAG AA failure criteria; ticket filed in sprint backlog for frontend remediation.
             </div>
             
 
-            <div class="code-diff-container">
-                <div class="code-pane before-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator red-dot"></span>
-                        <span class="pane-title">🔴 Original Non-Compliant HTML</span>
-                    </div>
-                    <pre><code>&lt;input class=&quot;form-control&quot; id=&quot;cc-cvv&quot; placeholder=&quot;CVV&quot; type=&quot;password&quot;/&gt;</code></pre>
-                </div>
-                <div class="code-pane after-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator green-dot"></span>
-                        <span class="pane-title">🟢 Recommended Accessible Patch</span>
-                    </div>
-                    <pre><code>&lt;label for=&quot;cc-cvv&quot; class=&quot;form-label&quot;&gt;CVV&lt;/label&gt;
-&lt;input class=&quot;form-control&quot; id=&quot;cc-cvv&quot; placeholder=&quot;CVV&quot; type=&quot;password&quot;/&gt;</code></pre>
-                </div>
-            </div>
+        <div class="diff-grid">
+          <div class="diff-col">
+            <h4 style="color: var(--critical);">🔴 Non-Compliant HTML (Before)</h4>
+            <div class="diff-code before">&lt;input class=&quot;form-control&quot; id=&quot;cardholder-name&quot; placeholder=&quot;Cardholder Full Name&quot; type=&quot;text&quot;/&gt;</div>
+          </div>
+          <div class="diff-col">
+            <h4 style="color: var(--success);">🟢 Accessible Patch (After)</h4>
+            <div class="diff-code after">&lt;label for=&quot;cardholder-name&quot; class=&quot;form-label&quot;&gt;Cardholder Full Name&lt;/label&gt;
+&lt;input class=&quot;form-control&quot; id=&quot;cardholder-name&quot; placeholder=&quot;Cardholder Full Name&quot; type=&quot;text&quot;/&gt;</div>
+          </div>
         </div>
+      </article>
+
+      <article class="violation-card">
+        <div class="card-top">
+          <span class="rule-tag">#4 &bull; WCAG-1.3.1</span>
+          <div>
+            <span class="badge badge-critical">Critical</span>
+            <span class="badge badge-triage-confirmed" style="margin-left: 0.4rem;">Confirmed Defect</span>
+          </div>
+        </div>
+        <h3 class="card-title">Missing Form Input Label</h3>
+        <div class="selector-box">Selector: #cc-number</div>
+        <p class="desc-text">Form control &lt;input&gt; lacks an accessible programmatic label (&lt;label for=&#x27;...&#x27;&gt;, wrapping label, or aria-label). Relying solely on placeholder=&#x27;Credit Card Number (16 digits)&#x27; violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.</p>
         
-
-        <div class="issue-card" id="issue-7">
-            <div class="issue-card-header">
-                <div class="issue-title-group">
-                    <span class="issue-index">#7</span>
-                    <span class="rule-id">WCAG-1.4.3</span>
-                    <h3 class="rule-name">Insufficient Color Contrast Ratio</h3>
-                </div>
-                <div class="badge-group">
-                    <span class="badge badge-sev" style="background:#ffedd5; color:#9a3412; border-color:#f97316;">
-                        Serious
-                    </span>
-                    <span class="badge badge-triage" style="background:#fee2e2; color:#991b1b; border-color:#dc2626;">
-                        ● Confirmed Defect
-                    </span>
-                </div>
-            </div>
-
-            <div class="issue-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Target DOM Selector:</span>
-                    <code class="meta-selector">#btn-submit-payment</code>
-                </div>
-            </div>
-
-            <div class="issue-body">
-                <p class="issue-explanation"><strong>Accessibility Barrier:</strong> Computed contrast ratio is 2.18:1, failing WCAG AA threshold of 4.5:1 (computed foreground &#x27;rgb(156, 163, 175)&#x27; on background &#x27;rgb(254, 240, 138)&#x27;). Users with low vision or color blindness cannot comfortably perceive this text.</p>
-                <p class="issue-fix"><strong>Remediation Strategy:</strong> Adjust text or background color to satisfy minimum 4.5:1 contrast ratio.</p>
-            </div>
-
-            
-            <div class="reviewer-notes-box">
-                <span class="reviewer-label">💬 Reviewer QA Triage Note:</span>
-                <span class="reviewer-text">Confirmed Defect: Critical screen reader or contrast barrier, ticket filed for front-end team.</span>
+        
+            <div class="notes-box">
+              <strong>QA Reviewer Note:</strong> Confirmed Defect: Meets WCAG AA failure criteria; ticket filed in sprint backlog for frontend remediation.
             </div>
             
 
-            <div class="code-diff-container">
-                <div class="code-pane before-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator red-dot"></span>
-                        <span class="pane-title">🔴 Original Non-Compliant HTML</span>
-                    </div>
-                    <pre><code>&lt;button type=&quot;submit&quot; id=&quot;btn-submit-payment&quot; class=&quot;btn-pay-broken&quot;&gt;
+        <div class="diff-grid">
+          <div class="diff-col">
+            <h4 style="color: var(--critical);">🔴 Non-Compliant HTML (Before)</h4>
+            <div class="diff-code before">&lt;input class=&quot;form-control&quot; id=&quot;cc-number&quot; placeholder=&quot;Credit Card Number (16 digits)&quot; type=&quot;text&quot;/&gt;</div>
+          </div>
+          <div class="diff-col">
+            <h4 style="color: var(--success);">🟢 Accessible Patch (After)</h4>
+            <div class="diff-code after">&lt;label for=&quot;cc-number&quot; class=&quot;form-label&quot;&gt;Credit Card Number (16 digits)&lt;/label&gt;
+&lt;input class=&quot;form-control&quot; id=&quot;cc-number&quot; placeholder=&quot;Credit Card Number (16 digits)&quot; type=&quot;text&quot;/&gt;</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="violation-card">
+        <div class="card-top">
+          <span class="rule-tag">#5 &bull; WCAG-1.3.1</span>
+          <div>
+            <span class="badge badge-critical">Critical</span>
+            <span class="badge badge-triage-confirmed" style="margin-left: 0.4rem;">Confirmed Defect</span>
+          </div>
+        </div>
+        <h3 class="card-title">Missing Form Input Label</h3>
+        <div class="selector-box">Selector: #cc-expiry</div>
+        <p class="desc-text">Form control &lt;input&gt; lacks an accessible programmatic label (&lt;label for=&#x27;...&#x27;&gt;, wrapping label, or aria-label). Relying solely on placeholder=&#x27;MM/YY&#x27; violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.</p>
+        
+        
+            <div class="notes-box">
+              <strong>QA Reviewer Note:</strong> Confirmed Defect: Meets WCAG AA failure criteria; ticket filed in sprint backlog for frontend remediation.
+            </div>
+            
+
+        <div class="diff-grid">
+          <div class="diff-col">
+            <h4 style="color: var(--critical);">🔴 Non-Compliant HTML (Before)</h4>
+            <div class="diff-code before">&lt;input class=&quot;form-control&quot; id=&quot;cc-expiry&quot; placeholder=&quot;MM/YY&quot; type=&quot;text&quot;/&gt;</div>
+          </div>
+          <div class="diff-col">
+            <h4 style="color: var(--success);">🟢 Accessible Patch (After)</h4>
+            <div class="diff-code after">&lt;label for=&quot;cc-expiry&quot; class=&quot;form-label&quot;&gt;MM/YY&lt;/label&gt;
+&lt;input class=&quot;form-control&quot; id=&quot;cc-expiry&quot; placeholder=&quot;MM/YY&quot; type=&quot;text&quot;/&gt;</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="violation-card">
+        <div class="card-top">
+          <span class="rule-tag">#6 &bull; WCAG-1.3.1</span>
+          <div>
+            <span class="badge badge-critical">Critical</span>
+            <span class="badge badge-triage-confirmed" style="margin-left: 0.4rem;">Confirmed Defect</span>
+          </div>
+        </div>
+        <h3 class="card-title">Missing Form Input Label</h3>
+        <div class="selector-box">Selector: #cc-cvv</div>
+        <p class="desc-text">Form control &lt;input&gt; lacks an accessible programmatic label (&lt;label for=&#x27;...&#x27;&gt;, wrapping label, or aria-label). Relying solely on placeholder=&#x27;CVV&#x27; violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.</p>
+        
+        
+            <div class="notes-box">
+              <strong>QA Reviewer Note:</strong> Confirmed Defect: Meets WCAG AA failure criteria; ticket filed in sprint backlog for frontend remediation.
+            </div>
+            
+
+        <div class="diff-grid">
+          <div class="diff-col">
+            <h4 style="color: var(--critical);">🔴 Non-Compliant HTML (Before)</h4>
+            <div class="diff-code before">&lt;input class=&quot;form-control&quot; id=&quot;cc-cvv&quot; placeholder=&quot;CVV&quot; type=&quot;password&quot;/&gt;</div>
+          </div>
+          <div class="diff-col">
+            <h4 style="color: var(--success);">🟢 Accessible Patch (After)</h4>
+            <div class="diff-code after">&lt;label for=&quot;cc-cvv&quot; class=&quot;form-label&quot;&gt;CVV&lt;/label&gt;
+&lt;input class=&quot;form-control&quot; id=&quot;cc-cvv&quot; placeholder=&quot;CVV&quot; type=&quot;password&quot;/&gt;</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="violation-card">
+        <div class="card-top">
+          <span class="rule-tag">#7 &bull; WCAG-1.4.3</span>
+          <div>
+            <span class="badge badge-serious">Serious</span>
+            <span class="badge badge-triage-confirmed" style="margin-left: 0.4rem;">Confirmed Defect</span>
+          </div>
+        </div>
+        <h3 class="card-title">Insufficient Color Contrast Ratio</h3>
+        <div class="selector-box">Selector: #btn-submit-payment</div>
+        <p class="desc-text">Computed contrast ratio is 2.18:1, failing WCAG AA threshold of 4.5:1 (computed foreground &#x27;rgb(156, 163, 175)&#x27; on background &#x27;rgb(254, 240, 138)&#x27;). Users with low vision or color blindness cannot comfortably perceive this text.</p>
+        
+        
+            <div class="notes-box">
+              <strong>QA Reviewer Note:</strong> Confirmed Defect: Meets WCAG AA failure criteria; ticket filed in sprint backlog for frontend remediation.
+            </div>
+            
+
+        <div class="diff-grid">
+          <div class="diff-col">
+            <h4 style="color: var(--critical);">🔴 Non-Compliant HTML (Before)</h4>
+            <div class="diff-code before">&lt;button type=&quot;submit&quot; id=&quot;btn-submit-payment&quot; class=&quot;btn-pay-broken&quot;&gt;
             Pay Now $228.00
-          &lt;/button&gt;</code></pre>
-                </div>
-                <div class="code-pane after-pane">
-                    <div class="pane-header">
-                        <span class="pane-indicator green-dot"></span>
-                        <span class="pane-title">🟢 Recommended Accessible Patch</span>
-                    </div>
-                    <pre><code>&lt;button type=&quot;submit&quot; id=&quot;btn-submit-payment&quot; class=&quot;btn-pay-broken&quot; style=&quot;background-color: #15803d; color: #ffffff; font-weight: 700;&quot;&gt;
+          &lt;/button&gt;</div>
+          </div>
+          <div class="diff-col">
+            <h4 style="color: var(--success);">🟢 Accessible Patch (After)</h4>
+            <div class="diff-code after">&lt;button type=&quot;submit&quot; id=&quot;btn-submit-payment&quot; class=&quot;btn-pay-broken&quot; style=&quot;background-color: #15803d; color: #ffffff; font-weight: 700;&quot;&gt;
   Pay Now $228.00
-&lt;/button&gt;</code></pre>
-                </div>
-            </div>
+&lt;/button&gt;</div>
+          </div>
         </div>
-        
-        </section>
+      </article>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>AI Accessibility (WCAG 2.1 AA) & UI Regression Auditor • Day-3 Executive QA Report</p>
-            <p>Produced automatically with context-aware LLM remediation and interactive QA human triage.</p>
-        </footer>
-    </div>
+    </section>
+  </div>
 </body>
 </html>

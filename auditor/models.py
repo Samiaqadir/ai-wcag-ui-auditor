@@ -1,6 +1,6 @@
 """
 Data models and structured schemas for WCAG accessibility violations,
-remediations, and visual/DOM regression diff reports.
+human QA triage states, remediations, and visual/DOM regression diff reports.
 """
 
 from enum import Enum
@@ -17,8 +17,16 @@ class Severity(str, Enum):
     MINOR = "Minor"
 
 
+class TriageStatus(str, Enum):
+    """Human QA Triage Review Status."""
+    PENDING = "Pending"
+    CONFIRMED_DEFECT = "Confirmed Defect"
+    FALSE_POSITIVE = "False Positive"
+    WONT_FIX = "Won't Fix"
+
+
 class Violation(BaseModel):
-    """Structured WCAG Accessibility Violation Schema with Context-Aware Remediation."""
+    """Structured WCAG Accessibility Violation Schema with Triage & Context Remediation."""
     rule_id: str = Field(..., description="Unique WCAG rule identifier, e.g. 'WCAG-1.1.1'")
     rule_name: str = Field(..., description="Human-readable rule name")
     severity: Severity = Field(..., description="Severity classification: Critical, Serious, Moderate, or Minor")
@@ -28,6 +36,8 @@ class Violation(BaseModel):
     suggested_fix: str = Field(..., description="Actionable remediation instructions")
     before_html: str = Field(default="", description="Original HTML snippet before remediation")
     after_html: str = Field(default="", description="Drop-in remediated HTML/ARIA code patch")
+    triage_status: TriageStatus = Field(default=TriageStatus.PENDING, description="Human QA triage decision")
+    reviewer_notes: str = Field(default="", description="Optional human reviewer notes or explanation")
 
 
 class PageAuditResult(BaseModel):
@@ -40,11 +50,31 @@ class PageAuditResult(BaseModel):
     status: str = Field(..., description="'PASSED' if 0 violations, else 'FAILED'")
     timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
+    def calculate_compliance_score(self) -> float:
+        """
+        Calculates dynamic WCAG 2.1 AA Compliance Score (0-100%).
+        Excludes items triaged as 'False Positive'.
+        Penalties: Critical (-15), Serious (-10), Moderate (-5), Minor (-2).
+        """
+        score = 100.0
+        for v in self.violations:
+            if v.triage_status == TriageStatus.FALSE_POSITIVE:
+                continue  # False positives do not penalize compliance score
+            if v.severity == Severity.CRITICAL:
+                score -= 15.0
+            elif v.severity == Severity.SERIOUS:
+                score -= 10.0
+            elif v.severity == Severity.MODERATE:
+                score -= 5.0
+            elif v.severity == Severity.MINOR:
+                score -= 2.0
+        return max(0.0, round(score, 1))
+
 
 class AuditSummaryReport(BaseModel):
     """Aggregated multi-page audit summary report."""
     timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
-    engine_version: str = "2.0.0-day2"
+    engine_version: str = "3.0.0-day3"
     total_pages_scanned: int
     passed_pages: int
     failed_pages: int
