@@ -10,6 +10,7 @@ Executes:
 import sys
 import json
 from pathlib import Path
+from typing import Dict, List
 from datetime import datetime, timezone
 from bs4 import BeautifulSoup
 
