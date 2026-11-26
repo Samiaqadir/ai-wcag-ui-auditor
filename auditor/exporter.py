@@ -16,13 +16,14 @@ from datetime import datetime, timezone
 from auditor.models import PageAuditResult, Violation, Severity, TriageStatus
 
 
-def export_to_html(result: PageAuditResult, report_title: Optional[str] = None) -> str:
+def export_to_html(result: PageAuditResult, report_title: Optional[str] = None, reviewer: Optional[str] = None) -> str:
     """
     Generates a self-contained, print-ready, modern HTML audit report.
     Includes compliance score gauge, triage badges, reviewer notes, and Before/After diffs.
     """
     title = report_title or f"WCAG 2.1 AA Executive QA Audit Report - {result.page_name}"
     score = result.calculate_compliance_score()
+    reviewer_str = f" &bull; <strong>Reviewer:</strong> {html.escape(reviewer)}" if reviewer else ""
     
     # Calculate triage counts
     total = len(result.violations)
@@ -258,7 +259,7 @@ def export_to_html(result: PageAuditResult, report_title: Optional[str] = None) 
         <div class="meta-line">
           <strong>Audited Page:</strong> {html.escape(result.page_name)} &bull; 
           <strong>Date:</strong> {html.escape(result.timestamp)} &bull;
-          <strong>Status:</strong> {html.escape(result.status)}
+          <strong>Status:</strong> {html.escape(result.status)}{reviewer_str}
         </div>
       </div>
       <div class="score-badge">
@@ -267,7 +268,8 @@ def export_to_html(result: PageAuditResult, report_title: Optional[str] = None) 
       </div>
     </header>
 
-    <section class="kpi-grid">
+    <main class="report-main">
+      <section class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-num">{total}</div>
         <div class="kpi-label">Total Findings</div>
@@ -341,7 +343,8 @@ def export_to_html(result: PageAuditResult, report_title: Optional[str] = None) 
 """
 
     html_content += """
-    </section>
+      </section>
+    </main>
   </div>
 </body>
 </html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!-- TEST CASE 10: 100% WCAG 2.1 AA Compliant Enterprise Portal (Zero Critical Violations Guaranteed) -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Horizon HR Portal - Fully Accessible Enterprise Suite</title>
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;       /* 16.5:1 on white */
+      --text-muted: #334155;      /* 9.6:1 on white */
+      --brand-blue: #1d4ed8;      /* 8.6:1 on white */
+      --brand-focus: #2563eb;
+      --border-color: #64748b;    /* 4.6:1 on white */
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+    header {
+      background-color: var(--bg-card);
+      border-bottom: 2px solid #e2e8f0;
+      padding: 1rem 2rem;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      padding: 0;
+      margin: 0.5rem 0 0 0;
+    }
+    nav a {
+      color: var(--brand-blue);
+      text-decoration: underline;
+      font-weight: 600;
+      padding: 4px 8px;
+    }
+    nav a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid var(--brand-focus);
+      outline-offset: 2px;
+    }
+    main {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--bg-card);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    h1 {
+      font-size: 2rem;
+      margin-top: 0;
+      color: var(--text-main);
+    }
+    h2 {
+      font-size: 1.5rem;
+      color: var(--text-main);
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+    }
+    .form-row {
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+    input[type="text"], input[type="email"], select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.75rem;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+      color: var(--text-main);
+      background: #ffffff;
+    }
+    .btn-submit {
+      background-color: var(--brand-blue);
+      color: #ffffff;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    footer {
+      max-width: 960px;
+      margin: 2rem auto;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid #cbd5e1;
+      padding-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <strong>Global Horizon Enterprise Portal</strong>
+    </div>
+    <nav aria-label="Main Navigation">
+      <ul>
+        <li><a href="#dashboard">Employee Dashboard</a></li>
+        <li><a href="#benefits">Health Benefits</a></li>
+        <li><a href="#timeoff">Request Time Off</a></li>
+        <li><a href="#compliance">Security Compliance</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <h1>Employee Annual Self-Service Portal</h1>
+    <p>Welcome to your central workspace for benefits, annual performance appraisals, and compliance training.</p>
+
+    <section aria-labelledby="section-profile-heading">
+      <h2 id="section-profile-heading">Profile Information Verification</h2>
+      
+      <form action="/update-profile" method="post">
+        <div class="form-row">
+          <label for="employee-id">Employee ID Number (Assigned by HR)</label>
+          <input type="text" id="employee-id" name="employee_id" value="EMP-2026-994" readonly>
+        </div>
+
+        <div class="form-row">
+          <label for="work-email">Corporate Work Email</label>
+          <input type="email" id="work-email" name="work_email" required value="samia.dev@globalhorizon.com">
+        </div>
+
+        <div class="form-row">
+          <label for="department-select">Primary Assigned Business Unit</label>
+          <select id="department-select" name="department">
+            <option value="eng">Quality Assurance & Automated Testing</option>
+            <option value="prod">Product Architecture</option>
+            <option value="sec">Cybersecurity Operations</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btn-save-profile">
+          Save Profile Information
+        </button>
+      </form>
+    </section>
+
+    <section aria-labelledby="section-docs-heading">
+      <h2 id="section-docs-heading">Official Corporate Compliance Documentation</h2>
+      <p>Download policy updates and verify adherence to ISO/IEC 40500 standards:</p>
+      <ul>
+        <li>
+          <a href="/docs/wcag-policy-2026.pdf" aria-label="Download corporate WCAG 2.1 compliance standard (PDF, 2.4 MB)">
+            Download Corporate Accessibility Standard (PDF)
+          </a>
+        </li>
+        <li>
+          <a href="/docs/security-handbook.pdf" aria-label="Read full employee security and password safety handbook (PDF, 1.1 MB)">
+            Read Security Handbook (PDF)
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Global Horizon Enterprise. Fully certified WCAG 2.1 Level AA compliant.</p>
+  </footer>
+</body>
+</html>

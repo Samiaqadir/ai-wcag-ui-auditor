@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- TEST CASE 06: Malformed HTML & Resilient Parsing Edge Case -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Malformed HTML Robustness Verification</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #ffffff; color: #1e293b; }
+    .bad-box { border: 1px solid #cbd5e1; padding: 15px; margin-bottom: 20px; }
+    .btn { background: #2563eb; color: #ffffff; padding: 8px 16px; border: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Malformed & Non-Standard HTML Test Suite</h1>
+    
+    <!-- 1. Unclosed tags and mismatched nesting -->
+    <div class="bad-box">
+      <h2>Section with Mismatched Tags
+      <p>This paragraph is never closed with a closing p tag.
+      <div>Nested div inside unclosed paragraph</span>
+    </div>
+
+    <!-- 2. Unquoted and non-standard attributes -->
+    <div class="bad-box">
+      <h2>Unquoted Form Attributes</h2>
+      <form action=/submit method=post>
+        <label for=user_name>Username</label>
+        <input type=text id=user_name name=user_name placeholder="Enter username">
+        
+        <!-- Intentionally missing label for detection -->
+        <input type=password id=secret_pass placeholder=Password>
+        <button type=submit class=btn>Log In</button>
+      </form>
+    </div>
+
+    <!-- 3. Broken image and malformed alt -->
+    <div class="bad-box">
+      <h2>Image with Unclosed Tag</h2>
+      <!-- Missing alt deliberately -->
+      <img src="test-banner.jpg" width=400 height=150>
+    </div>
+  </main>
+</body>
+</html>

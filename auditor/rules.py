@@ -31,6 +31,9 @@ def _clean_snippet(tag: Tag, max_len: int = 160) -> str:
 def audit_missing_image_alt(soup: BeautifulSoup) -> List[Violation]:
     violations: List[Violation] = []
     for img in soup.find_all("img"):
+        # If inside inert <template> or explicitly decorative via presentation role or aria-hidden, skip
+        if img.find_parent("template") or img.get("role") in ["presentation", "none"] or img.get("aria-hidden") == "true":
+            continue
         if not img.has_attr("alt"):
             selector = generate_css_selector(img)
             snippet = _clean_snippet(img)
@@ -62,6 +65,8 @@ def audit_missing_form_labels(soup: BeautifulSoup) -> List[Violation]:
     controls = soup.find_all(["input", "select", "textarea"])
 
     for ctrl in controls:
+        if ctrl.find_parent("template"):
+            continue
         if ctrl.name == "input" and ctrl.get("type", "text").lower() in excluded_types:
             continue
 
@@ -142,6 +147,19 @@ def audit_computed_color_contrast(inspection: PageInspectionResult) -> List[Viol
             continue
 
         styles = elem_data.styles
+
+        # Filter out elements that are visually hidden or zero-dimensioned
+        if (
+            not getattr(elem_data, "is_visible", True)
+            or styles.get("display") == "none"
+            or styles.get("visibility") in ["hidden", "collapse"]
+            or styles.get("opacity") == "0"
+            or elem_data.attributes.get("aria-hidden") == "true"
+            or elem_data.bounding_box.width <= 0
+            or elem_data.bounding_box.height <= 0
+        ):
+            continue
+
         fg_color = styles.get("color", "")
         bg_color = styles.get("backgroundColor", "")
 
@@ -256,6 +274,8 @@ def audit_interactive_roles_and_aria(soup: BeautifulSoup) -> List[Violation]:
     # 1. Custom interactive roles on non-interactive elements without tabindex
     interactive_roles = {"button", "link", "checkbox", "tab", "menuitem"}
     for el in soup.find_all(attrs={"role": True}):
+        if el.find_parent("template"):
+            continue
         role = el.get("role", "").lower()
         if role in interactive_roles and el.name in ["div", "span", "p", "a", "i", "section"]:
             if not el.has_attr("tabindex"):
@@ -280,13 +300,19 @@ def audit_interactive_roles_and_aria(soup: BeautifulSoup) -> List[Violation]:
 
     # 2. Empty icon-only buttons without accessible name
     for btn in soup.find_all("button"):
+        if btn.find_parent("template"):
+            continue
         text = btn.get_text(strip=True)
         aria_label = btn.get("aria-label", "").strip()
         aria_labelledby = btn.get("aria-labelledby", "").strip()
+        title_attr = btn.get("title", "").strip()
         img = btn.find("img")
         has_img_alt = img and bool(img.get("alt", "").strip())
+        svg = btn.find("svg")
+        has_svg_title = bool(svg and svg.find("title") and svg.find("title").get_text(strip=True))
+        has_svg_aria = bool(svg and (svg.get("aria-label", "").strip() or svg.get("aria-labelledby", "").strip()))
 
-        if not text and not aria_label and not aria_labelledby and not has_img_alt:
+        if not text and not aria_label and not aria_labelledby and not title_attr and not has_img_alt and not has_svg_title and not has_svg_aria:
             selector = generate_css_selector(btn)
             snippet = _clean_snippet(btn)
             violations.append(
@@ -297,7 +323,7 @@ def audit_interactive_roles_and_aria(soup: BeautifulSoup) -> List[Violation]:
                     dom_selector=selector,
                     raw_html_snippet=snippet,
                     issue_explanation=(
-                        "The <button> contains no readable text, aria-label, or image alt attribute. "
+                        "The <button> contains no readable text, aria-label, title, or accessible image/svg alt/title. "
                         "Screen readers will announce an unlabelled button, preventing users from understanding its action."
                     ),
                     suggested_fix='Add aria-label="Action Name" or include descriptive text.',
@@ -320,6 +346,8 @@ def audit_generic_alt_text_quality(soup: BeautifulSoup) -> List[Violation]:
     }
 
     for img in soup.find_all("img"):
+        if img.find_parent("template"):
+            continue
         if img.has_attr("alt"):
             alt_val = img.get("alt", "").strip().lower()
             # If alt is present, but matches a generic term or raw filename
@@ -354,6 +382,18 @@ def audit_ambiguous_links_and_buttons(soup: BeautifulSoup) -> List[Violation]:
     vague_phrases = {"click here", "read more", "learn more", "more details", "here", "more", "details", "download"}
 
     for el in soup.find_all(["a", "button"]):
+        if el.find_parent("template"):
+            continue
+        # If element provides unambiguous contextual accessible name via aria-label or aria-labelledby, it is compliant
+        aria_label = el.get("aria-label", "").strip()
+        if aria_label and aria_label.lower() not in vague_phrases:
+            continue
+        aria_labelledby = el.get("aria-labelledby", "").strip()
+        if aria_labelledby:
+            target = soup.find(id=aria_labelledby)
+            if target and target.get_text(strip=True).lower() not in vague_phrases:
+                continue
+
         text = el.get_text(strip=True).lower()
         if text in vague_phrases:
             selector = generate_css_selector(el)
@@ -465,6 +505,13 @@ def audit_keyboard_focus_and_tab_order(inspection: PageInspectionResult) -> List
 def audit_semantic_landmarks(soup: BeautifulSoup) -> List[Violation]:
     violations: List[Violation] = []
     
+    body = soup.find("body") or soup
+    body_text = body.get_text(strip=True) if hasattr(body, "get_text") else ""
+    child_tags = [c for c in getattr(body, "children", []) if isinstance(c, Tag)]
+    # If the document or body is completely empty (no text and no tag elements), skip landmark checks
+    if not body_text and not child_tags:
+        return violations
+
     # Check for primary <main> landmark
     main_landmark = soup.find(["main", "div"], attrs={"role": "main"})
     if not main_landmark and soup.find("main") is None:

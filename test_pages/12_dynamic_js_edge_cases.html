@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- TEST CASE 12: Dynamic JavaScript SPA Edge Cases & Hidden Nodes -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic JavaScript Single Page App (SPA) Simulation</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #ffffff; color: #1e293b; }
+    .tab-panel { display: block; padding: 16px; border: 1px solid #cbd5e1; margin-top: 8px; }
+    /* Visually hidden modal / offscreen elements */
+    .modal-hidden { display: none; }
+    .drawer-collapsed { visibility: hidden; }
+    .zero-rect-hidden { width: 0; height: 0; overflow: hidden; opacity: 0; }
+    .contrast-poor-hidden { color: #e2e8f0; background-color: #ffffff; }
+    .btn { padding: 8px 16px; background: #2563eb; color: #ffffff; border: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dynamic Client-Side SPA Simulator</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Active Visible Workspace</h2>
+      <p>This section represents live, rendered DOM components in the viewport.</p>
+      <button type="button" class="btn" id="btn-toggle-modal" onclick="toggleModal()">
+        Open Dynamic Settings Modal
+      </button>
+    </section>
+
+    <!-- Edge Case 1: Elements styled with display: none should NOT trigger false positive contrast errors -->
+    <div id="hidden-settings-modal" class="modal-hidden" aria-hidden="true">
+      <h3>Modal Title with Inactive Poor Contrast</h3>
+      <p class="contrast-poor-hidden">This text would fail contrast if rendered, but is currently display:none.</p>
+      <button type="button">Close Modal</button>
+    </div>
+
+    <!-- Edge Case 2: Elements styled with visibility: hidden -->
+    <div id="collapsed-drawer" class="drawer-collapsed" aria-hidden="true">
+      <span class="contrast-poor-hidden">Collapsed drawer text</span>
+    </div>
+
+    <!-- Edge Case 3: Zero-dimension container with opacity: 0 -->
+    <div class="zero-rect-hidden">
+      <span class="contrast-poor-hidden">Invisible offscreen text</span>
+    </div>
+
+    <!-- Edge Case 4: Client-side <template> tag (inactive document fragment) -->
+    <template id="card-template">
+      <div class="user-card">
+        <h4>Template Card</h4>
+        <img src="avatar.jpg">
+      </div>
+    </template>
+  </main>
+
+  <script>
+    function toggleModal() {
+      const modal = document.getElementById('hidden-settings-modal');
+      if (modal.style.display === 'block') {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      } else {
+        modal.style.display = 'block';
+        modal.removeAttribute('aria-hidden');
+      }
+    }
+  </script>
+</body>
+</html>

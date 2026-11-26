@@ -67,6 +67,7 @@ class ElementRuntimeData:
         raw_html: str,
         text_content: str,
         attributes: Dict[str, Any],
+        is_visible: bool = True,
     ):
         self.selector = selector
         self.tag_name = tag_name
@@ -75,6 +76,7 @@ class ElementRuntimeData:
         self.raw_html = raw_html
         self.text_content = text_content
         self.attributes = attributes
+        self.is_visible = is_visible
 
 
 class PageInspectionResult:
@@ -181,12 +183,26 @@ class PlaywrightDOMInspector:
                             attrs[attr.name] = attr.value;
                         }
 
+                        // Check true visual visibility across ancestor cascades and inert templates
+                        let isVisible = true;
+                        if (el.closest('template') || el.closest('[aria-hidden="true"]')) {
+                            isVisible = false;
+                        } else if (typeof el.checkVisibility === 'function') {
+                            isVisible = el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true });
+                        } else {
+                            isVisible = (style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0');
+                        }
+                        if (rect.width <= 0 || rect.height <= 0) {
+                            isVisible = false;
+                        }
+
                         data.push({
                             selector: selector,
                             tag: el.tagName.toLowerCase(),
                             raw_html: el.outerHTML.slice(0, 300),
                             text: el.innerText || el.textContent || '',
                             attributes: attrs,
+                            is_visible: isVisible,
                             rect: {
                                 x: rect.x,
                                 y: rect.y,
@@ -230,6 +246,7 @@ class PlaywrightDOMInspector:
                         raw_html=item["raw_html"],
                         text_content=item["text"],
                         attributes=item["attributes"],
+                        is_visible=item.get("is_visible", True),
                     )
 
                 # Simulate sequential Tab keyboard navigation
