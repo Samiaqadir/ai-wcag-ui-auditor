@@ -1,6 +1,6 @@
 # WCAG 2.1 AA Remediation Showcase: Before & After HTML/ARIA Fixes
 
-**Generated:** 2026-11-24 08:04:48 UTC  
+**Generated:** 2026-11-26 05:09:41 UTC  
 **Auditor Engine:** Day-2 Context-Aware Remediation Suite  
 
 This document showcases automated drop-in accessible code patches generated for detected WCAG barriers.
@@ -204,7 +204,7 @@ This document showcases automated drop-in accessible code patches generated for 
 ### 4. Button Missing Accessible Name (`WCAG-4.1.2`)
 - **Severity:** `Critical`
 - **Target DOM Selector:** `#notifications-btn`
-- **Issue:** The <button> contains no readable text, aria-label, or image alt attribute. Screen readers will announce an unlabelled button, preventing users from understanding its action.
+- **Issue:** The <button> contains no readable text, aria-label, title, or accessible image/svg alt/title. Screen readers will announce an unlabelled button, preventing users from understanding its action.
 - **Remediation Strategy:** Add aria-label="Action Name" or include descriptive text.
 
 #### 🔴 Before (Violating Code):
@@ -222,7 +222,7 @@ This document showcases automated drop-in accessible code patches generated for 
 ### 5. Button Missing Accessible Name (`WCAG-4.1.2`)
 - **Severity:** `Critical`
 - **Target DOM Selector:** `#settings-btn`
-- **Issue:** The <button> contains no readable text, aria-label, or image alt attribute. Screen readers will announce an unlabelled button, preventing users from understanding its action.
+- **Issue:** The <button> contains no readable text, aria-label, title, or accessible image/svg alt/title. Screen readers will announce an unlabelled button, preventing users from understanding its action.
 - **Remediation Strategy:** Add aria-label="Action Name" or include descriptive text.
 
 #### 🔴 Before (Violating Code):

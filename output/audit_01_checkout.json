@@ -18,7 +18,9 @@
       "issue_explanation": "The <img> element is completely missing an 'alt' attribute. Screen readers cannot describe the visual content to users with visual impairments and may announce the raw image URL.",
       "suggested_fix": "Add a descriptive alt attribute, e.g. alt=\"Description of image\", or alt=\"\" if decorative.",
       "before_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%236366f1'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\"/> ... </img>",
-      "after_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%236366f1'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\" alt=\"Ultra-Light Wireless Noise Cancelling Headphones\"> ... </img>"
+      "after_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%236366f1'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\" alt=\"Ultra-Light Wireless Noise Cancelling Headphones\"> ... </img>",
+      "triage_status": "Pending",
+      "reviewer_notes": ""
     },
     {
       "rule_id": "WCAG-1.1.1",
@@ -29,7 +31,9 @@
       "issue_explanation": "The <img> element is completely missing an 'alt' attribute. Screen readers cannot describe the visual content to users with visual impairments and may announce the raw image URL.",
       "suggested_fix": "Add a descriptive alt attribute, e.g. alt=\"Description of image\", or alt=\"\" if decorative.",
       "before_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%2310b981'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\"/> ... </img>",
-      "after_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%2310b981'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\" alt=\"Braided Fast-Charging USB-C Cable (2m)\"> ... </img>"
+      "after_html": "<img class=\"product-img\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='%2310b981'&gt;&lt;rect width='100%' height='100%'/&gt;&lt;/svg&gt;\" alt=\"Braided Fast-Charging USB-C Cable (2m)\"> ... </img>",
+      "triage_status": "Pending",
+      "reviewer_notes": ""
     },
     {
       "rule_id": "WCAG-1.3.1",
@@ -40,7 +44,9 @@
       "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='Cardholder Full Name' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
       "suggested_fix": "<label for=\"cardholder-name\">Field Label</label> or aria-label=\"Field Label\"",
       "before_html": "<input class=\"form-control\" id=\"cardholder-name\" placeholder=\"Cardholder Full Name\" type=\"text\"/>",
-      "after_html": "<label for=\"cardholder-name\" class=\"form-label\">Cardholder Full Name</label>\n<input class=\"form-control\" id=\"cardholder-name\" placeholder=\"Cardholder Full Name\" type=\"text\"/>"
+      "after_html": "<label for=\"cardholder-name\" class=\"form-label\">Cardholder Full Name</label>\n<input class=\"form-control\" id=\"cardholder-name\" placeholder=\"Cardholder Full Name\" type=\"text\"/>",
+      "triage_status": "Pending",
+      "reviewer_notes": ""
     },
     {
       "rule_id": "WCAG-1.3.1",
@@ -51,7 +57,9 @@
       "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='Credit Card Number (16 digits)' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
       "suggested_fix": "<label for=\"cc-number\">Field Label</label> or aria-label=\"Field Label\"",
       "before_html": "<input class=\"form-control\" id=\"cc-number\" placeholder=\"Credit Card Number (16 digits)\" type=\"text\"/>",
-      "after_html": "<label for=\"cc-number\" class=\"form-label\">Credit Card Number (16 digits)</label>\n<input class=\"form-control\" id=\"cc-number\" placeholder=\"Credit Card Number (16 digits)\" type=\"text\"/>"
+      "after_html": "<label for=\"cc-number\" class=\"form-label\">Credit Card Number (16 digits)</label>\n<input class=\"form-control\" id=\"cc-number\" placeholder=\"Credit Card Number (16 digits)\" type=\"text\"/>",
+      "triage_status": "Pending",
+      "reviewer_notes": ""
     },
     {
       "rule_id": "WCAG-1.3.1",
@@ -62,7 +70,9 @@
       "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='MM/YY' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
       "suggested_fix": "<label for=\"cc-expiry\">Field Label</label> or aria-label=\"Field Label\"",
       "before_html": "<input class=\"form-control\" id=\"cc-expiry\" placeholder=\"MM/YY\" type=\"text\"/>",
-      "after_html": "<label for=\"cc-expiry\" class=\"form-label\">MM/YY</label>\n<input class=\"form-control\" id=\"cc-expiry\" placeholder=\"MM/YY\" type=\"text\"/>"
+      "after_html": "<label for=\"cc-expiry\" class=\"form-label\">MM/YY</label>\n<input class=\"form-control\" id=\"cc-expiry\" placeholder=\"MM/YY\" type=\"text\"/>",
+      "triage_status": "Pending",
+      "reviewer_notes": ""
     },
     {
       "rule_id": "WCAG-1.3.1",
@@ -73,7 +83,9 @@
       "issue_explanation": "Form control <input> lacks an accessible programmatic label (<label for='...'>, wrapping label, or aria-label). Relying solely on placeholder='CVV' violates WCAG 3.3.2 because placeholders disappear on user input and are not reliably announced by all screen readers.",
       "suggested_fix": "<label for=\"cc-cvv\">Field Label</label> or aria-label=\"Field Label\"",
       "before_html": "<input class=\"form-control\" id=\"cc-cvv\" placeholder=\"CVV\" type=\"password\"/>",
-      "after_html": "<label for=\"cc-cvv\" class=\"form-label\">CVV</label>\n<input class=\"form-control\" id=\"cc-cvv\" placeholder=\"CVV\" type=\"password\"/>"
+      "after_html": "<label for=\"cc-cvv\" class=\"form-label\">CVV</label>\n<input class=\"form-control\" id=\"cc-cvv\" placeholder=\"CVV\" type=\"password\"/>",
+      "triage_status": "Pending",
+      "reviewer_notes": ""
     },
     {
       "rule_id": "WCAG-1.4.3",
@@ -84,9 +96,11 @@
       "issue_explanation": "Computed contrast ratio is 2.18:1, failing WCAG AA threshold of 4.5:1 (computed foreground 'rgb(156, 163, 175)' on background 'rgb(254, 240, 138)'). Users with low vision or color blindness cannot comfortably perceive this text.",
       "suggested_fix": "Adjust text or background color to satisfy minimum 4.5:1 contrast ratio.",
       "before_html": "<button type=\"submit\" id=\"btn-submit-payment\" class=\"btn-pay-broken\">\n            Pay Now $228.00\n          </button>",
-      "after_html": "<button type=\"submit\" id=\"btn-submit-payment\" class=\"btn-pay-broken\" style=\"background-color: #15803d; color: #ffffff; font-weight: 700;\">\n  Pay Now $228.00\n</button>"
+      "after_html": "<button type=\"submit\" id=\"btn-submit-payment\" class=\"btn-pay-broken\" style=\"background-color: #15803d; color: #ffffff; font-weight: 700;\">\n  Pay Now $228.00\n</button>",
+      "triage_status": "Pending",
+      "reviewer_notes": ""
     }
   ],
   "status": "FAILED",
-  "timestamp": "2026-11-24T08:04:42.399505+00:00"
+  "timestamp": "2026-11-26T05:09:29.408790+00:00"
 }
